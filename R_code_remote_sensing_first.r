@@ -15,6 +15,8 @@ plot(p224r63_2011) #mi visualizza le immagini di bande di riflettanza
 #vogliamo visualizzare una diversa scala di colore e stabiliamo noi una diversa scala di colori
 #che restituiscono i valori di riflettanza per una determinata lunghezza d'onda
 
+#B1 mostra la banda blu, B2 la banda verde, B3 la banda rossa, B4 il vicino infrarosso, B5 il medio infrarosso , B6 l'infrarosso termico e B7 nuovamente l'infrarosso medio
+
 #color change
 color<-colorRampPalette(c("black","grey","light grey"))(100) #dobbiamo racchiuderli in un vettore per dirgli che fanno parte della stessa caratteristica, ovvero il colore, 
 #sono diversi elementi per lo stesso argomento
@@ -22,5 +24,5 @@ color<-colorRampPalette(c("black","grey","light grey"))(100) #dobbiamo racchiude
 
 > plot(p224r63_2011, col=color) #con questo comando plottiamo il raster con la nuova colorazione
 
-cl<-colorRampPalette(c("blue","sky blue","violet","pink"))(100)
+cl<-colorRampPalette(c("blue","sky blue","purple","pink"))(100)
 plot(p224r63_2011, col=cl) #proviamo un'altra scala di colori
