@@ -21,3 +21,6 @@ color<-colorRampPalette(c("black","grey","light grey"))(100) #dobbiamo racchiude
 #con (100) gli diciamo quanti livelli di colore inserire nella scala
 
 > plot(p224r63_2011, col=color) #con questo comando plottiamo il raster con la nuova colorazione
+
+cl<-colorRampPalette(c("blue","sky blue","violet","pink"))(100)
+plot(p224r63_2011, col=cl) #proviamo un'altra scala di colori
