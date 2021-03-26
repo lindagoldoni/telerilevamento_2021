@@ -82,3 +82,44 @@ plot(p224r63_2011$B3_sre,col=clr) #in questo modo richiamo la banda rossa
 clnir<-colorRampPalette(c("red","orange","yellow"))(100)
 plot(p224r63_2011$B4_sre,col=clnir) #in questo modo richiamo la banda infrarossa
 
+############################################################################
+# DAY 4
+
+#plottiamo tutte le bande insieme con un plot RGB del dato
+#prima di tutto richarichiamo nuovamente il pacchetto e il file
+
+# bande di landsat
+#B1: blu
+#B2: verde
+#B3: rosso 
+#B4: vicino infrarosso
+#B5: medio infrarosso
+#B6: infrarosso termico
+#B7: infrarosso medio
+
+# schema RGB: ogni schermo utilizza il rosso, il verde e il blu, che mischiandosi generano tutti gli altri colori per generare le immagini con colori "naturali".
+#nello schema RGB posso utilizzare tre bande per volta
+# prendo la banda del rosso e la monto sulla banda B3, la banda del verde nella B2 e la banda del blu e la metto sul B1, con questo schema possiamo visualizzare le immagini con colori naturali
+# la funzione per l'applicazione è
+plotRGB(p224r63_2011, r=3,g=2,b=1, stretch="Lin") # dobbiamo spiegargli quali bande associare alle componenti, con "stretch" prendiamo le bande e le allunghiamo in modo da non visualizzare meglio una banda a discapito di un'altra, in modo da schiacciare i valori
+# con questo formato di colori risulta difficile distinguere forme da altre
+# Non mettiamo "B1_sre" perché la funzione è progettata per usare direttamente il numero del layer invece del nome della banda, quindi mettiamo direttamente in che punto del nostro pacchetto è la banda corrispondente
+
+# vogliamo provare con altre bande
+plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="Lin") #in questo modo scorriamo le bande di 1 e togliamo il blu: infrarosso, rosso, verde. 
+# siccome nella componente "red" abbiamo montato l'infrarosso, la vegetazione ha altissima riflettanza in questa banda (in questo modo la vegetazione diventa rossa)
+
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin") #spostiamo la banda infrarosso sul "green", la vegetazione in questo modo diventa verde
+#si vedono pattern che prima non erano visibili all'interno della foresta, il viola invece rappresenta sempre suolo nudo visualizzando bene la componente agricola
+
+plotRGB(p224r63_2011, r=3,g=2,b=4, stretch="Lin") #monta l'infrarosso nella componente blu
+
+#montiamo le 4 immagini nello stesso plot con "par" 2x2
+par(mfrow=c(2,2))
+plotRGB(p224r63_2011, r=3,g=2,b=1, stretch="Lin")
+plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3,g=2,b=4, stretch="Lin")
+
+# da questo grafico si vede molto bene che utilizzando i colori naturali gran parte delle sfumature del paesaggio vengono perse, perché in quella lunghezza d'onda il fatto che la vegetazione abbia più o meno umidità NON VIENE VISUALIZZATO
+#esiste un altro tipo di stretch che è l'"histogram"
