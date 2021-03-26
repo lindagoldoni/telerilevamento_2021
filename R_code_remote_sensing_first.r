@@ -115,11 +115,31 @@ plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin") #spostiamo la banda infrarosso
 plotRGB(p224r63_2011, r=3,g=2,b=4, stretch="Lin") #monta l'infrarosso nella componente blu
 
 #montiamo le 4 immagini nello stesso plot con "par" 2x2
+# esiste una funzione per salvare l'immagine come pdf nella nostra cartella
+pdf("il_mio_primo_pdf.pdf")
 par(mfrow=c(2,2))
 plotRGB(p224r63_2011, r=3,g=2,b=1, stretch="Lin")
 plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3,g=2,b=4, stretch="Lin")
+dev.off()
 
 # da questo grafico si vede molto bene che utilizzando i colori naturali gran parte delle sfumature del paesaggio vengono perse, perché in quella lunghezza d'onda il fatto che la vegetazione abbia più o meno umidità NON VIENE VISUALIZZATO
-#esiste un altro tipo di stretch che è l'"histogram"
+#esiste un altro tipo di stretch che è l'"histogram", invece di fare il profilo lineare, questa funzione allunga ancora di più la banda, ha una potenza media più alta
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist") # all'interno della foresta vediamo una grande differenziazione rispetto alle immagini precedenti, probabilmente dovuto alle zone più umide
+# grazie alla modifica dell'immagine si vedono quindi forme che altrimenti ad occhio nudo non avremmo mai visto
+
+# par con colori naturali, con colori falsati e con colori falsati dati dall'histogram stretch
+par(mfrow=c(3,1))
+plotRGB(p224r63_2011, r=3,g=2,b=1, stretch="Lin")
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist")
+# si vedono notevoli differenze tra le diverse immagini a dimostrare la potenza della modifica delle bande su immagini satellitari
+
+#per le immagini RGB non c'è la legenda perché non decidiamo noi i colori ma "giochiamo" con i colori presenti nell'immagine, decide il programma come miscelare i colori
+# colorist R package: è un pacchetto che serve per montare l'RGB in tanti modi, serve a fare plot nello spazio e nel tempo in RGB mostrando le caratteristiche di distribuzione di una certa specie
+
+########################################################################
+# DAY 5
+# dobbiamo installare un pacchetti RStoolbox
