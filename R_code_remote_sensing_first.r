@@ -128,7 +128,7 @@ dev.off()
 #esiste un altro tipo di stretch che è l'"histogram", invece di fare il profilo lineare, questa funzione allunga ancora di più la banda, ha una potenza media più alta
 plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist") # all'interno della foresta vediamo una grande differenziazione rispetto alle immagini precedenti, probabilmente dovuto alle zone più umide
-# grazie alla modifica dell'immagine si vedono quindi forme che altrimenti ad occhio nudo non avremmo mai visto
+# grazie alla modifica dell'immagine si vedono quindi forme che altrimenti ad occhio nudo non avremmo mai visto, perché la pendenza è molto più ampia e si possono vedere meglio le forme, ottimo nell'analisi delle forme geologiche
 
 # par con colori naturali, con colori falsati e con colori falsati dati dall'histogram stretch
 par(mfrow=c(3,1))
@@ -143,3 +143,36 @@ plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist")
 ########################################################################
 # DAY 5
 # dobbiamo installare un pacchetti RStoolbox
+
+# 1988 image
+# p224r63_1988_masked
+install.packages("RStoolbox")
+library(raster)
+library(RStoolbox)
+p224r63_2011 <- brick("p224r63_2011_masked.grd") # immagine del 2011, con l'intero blocca di bande tramite la funzione "brick"
+p224r63_2011
+
+#Sequenza multitemporale
+p224r63_1988 <- brick("p224r63_1988_masked.grd") # richiamo l'immagine del 1988 dalla cartella "lab" e la associamo ad una variabile
+p224r63_1988 # in questo modo vediamo le informazioni del raster, che sono identiche al raster precedente, cambia solo l'anno di acquisizione
+
+plot(p224r63_1988) # plottiamo prima la sola 1988
+plotRGB(p224r63_1988, r=3,g=2,b=1, stretch="Lin")  #plottiamo mostrando le bande RGB
+plotRGB(p224r63_1988, r=4,g=3,b=2, stretch="Lin") # associamo la banda rossa B3 al verde in RGB
+
+# facciamo uno schema con 2 righe e una colonna con immagini al naturale del 1988 e 2011, in modo da mostrare una sequenza multitemporale
+par(mfrow=c(2,1))
+plotRGB(p224r63_1988, r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="Lin")
+
+# plottiamo in una finestra 4 immagini: in una riga la sequenza temporale con stretch "lineare", nella seconda riga la sequenza temporale con stretch "histogram"
+pdf("sequenza_multitemporale_foresta_pluviale.pdf") #generiamo il file pdf nella cartella "lab"
+par(mfrow=c(2,2))
+plotRGB(p224r63_1988, r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_1988, r=4,g=3,b=2, stretch="hist")
+plotRGB(p224r63_2011, r=4,g=3,b=2, stretch="hist")
+dev.off()
+# immagine 1988: si vede molto bene che c'era la transizione graduale dalla foresta alla zona antropizzata
+# immagine 2011: si vede il passaggio netto tra foresta e paesaggio antropico
+# con l"histogram" si genera molto rumore che non fa apprezzare benissimo le forme 
