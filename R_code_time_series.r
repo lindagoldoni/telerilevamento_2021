@@ -115,9 +115,4 @@ melt_amount # si va da un valore di -87 a 92
 levelplot(melt_amount, col.regions=clb)
 # possiamo fare di tante immagini un unico plot o la differenza fra loro
 
-##########################################################################
-#DAY 8 
 
-
-install.packages("knitr")
-library(knitr)
