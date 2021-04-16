@@ -118,5 +118,6 @@ levelplot(melt_amount, col.regions=clb)
 ##########################################################################
 #DAY 8 
 
+
 install.packages("knitr")
 library(knitr)
