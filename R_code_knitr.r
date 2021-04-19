@@ -11,10 +11,12 @@ setwd("C:/lab/greenland/") # settiamo la working directory
 # prendiamo un codice già scritto lo copiamo e lo incolliamo in un programma di testo (preferibilmente non Word perché utilizza un codice suo)
 # siamo andati a mettere il codice nella cartella di riferimento, knitr lo prende, lo mette in R e genera il report
 
+tinytex::install_tinytex()
+tinytex::tlmgr_update()
+# sono stati installati il pacchetto "tinytex" e il rispettivo aggiornamento per implementare la conversione del file tex, generato con la funzione "stitch", in pdf
+#questo procedimento non veniva eseguito per mancanza di librerie interne al computer 
 
-
-
-stitch("C:/lab/greenland/R_code_greenland.r" , template=system.file("misc", "knitr-template.Rnw", package="knitr"))
+stitch("C:/lab/greenland/R_code_greenland.r.txt" , template=system.file("misc", "knitr-template.Rnw", package="knitr"))
 # la funzione "stitch" serve a implementare il pacchetto knitr per produrre il report
 #diamo un nome al nostro codice e lo utilizzaremo per fare il file finale
 
