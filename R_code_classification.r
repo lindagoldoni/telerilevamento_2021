@@ -53,7 +53,39 @@ plot(sunc$map)
 #più aumentiamo i dettagli più aumenta il rumore dato da ombre o nuvole
 # più si aumentano i livelli più ci si avvicina all'immagine originale
 
-#GRAN CANYON
+#GRAND CANYON
+# https://landsat.visibleearth.nasa.gov/view.php?id=80948
 
 #le nuvole possono essere tolte con funzioni creando un file "masked" oppure uyilizziamo un altro tipo di sensore
 #le immagini ad ora utilizzate sono state acquisite con sensori passivi
+# la mineralogia delle rocce determina vari valori di riflettanza di una certa zona
+# utilizziamo un'immagine landsat con colori del visibile
+
+#carichiamo le librerie dei pacchetti
+library(raster)
+library(RStoolbox)
+setwd("C:/lab/canyon/") # settiamo la cartella come working directory
+
+canyon<-brick("dolansprings_oli_2013088_canyon_lrg.jpg") #carichiamo l'immagine RGB con la funzione "brick" che carica tutti i livelli
+plotRGB(canyon,1 ,2 ,3, stretch="lin") #lo stretch serve per aumentare la risoluzione dei colori, l'immagine landsat ha una risoluzione dei pixel 30x30, estendiamo la visione dei colori
+plotRGB(canyon,1 ,2 ,3, stretch="hist") # facciamo il plot visualizzando i colori ancora più dettagliati e catturando più colori
+# per fare la classificazione guidata dal computer utilizziamo unsuperClass function
+
+canyonc<-unsuperClass(canyon,nClasses=2)# applichiamo la classificazione e la salviamo in una variabile e applichiamo il numero di classi che vogliamo visualizzare
+canyonc #visualizziamo gli attributi dell'immagine
+plot(canyonc$map) #del nostro output vogliamo visualizzare soltanto la mappa
+
+# la differenziazione maggiore la vediamo nella macchia centrale che può essere data da una differenza di mineralogia
+# ovviamente utilizza la classificazione attraverso la differenza di riflettanza
+
+#aumentiamo le classi
+canyonc4<-unsuperClass(canyon,nClasses=4)
+canyonc4
+plot(canyonc4$map)
+# l'acqua assorbe molto l'infrarosso quindi appare nera in questa banda (se la usassimo) ora siamo nel visibile in RGB
+# con le 4 classificazioni ovviamente vediamo maggiore dettaglio, per appurare le classificazioni bisognerebbe andare  a terra e verificare come mai ci sono differenze nella riflettanza
+
+# analisi multivariata: vogliamo compattare le informazioni tra loro correlate, misura la varianza tra la riflettanza su due bande
+# dobbiamo compattare un sistema a due bande: partendo dall'origine si traccia un asse e lo chiamiamo "Componente principale 1" PC! e il secondo asse lo facciamo passare perpendicolare al primo e lo chiamiamo PC2
+# il sistema ha sempre due bande  MA LA VARIABILITA E DI CIRCA IL 90% PER PC1 E 10 % PC2: invece di usare tutti e due gli assi ne uso solo uno (PC1 ad esempia che interessa già il 90%)
+# la componente principale è quella meglio visualizzata e le altre rappresentano il rumore
