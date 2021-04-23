@@ -27,3 +27,5 @@ plot(p224r63_2011$B2_sre,p224r63_2011$B1_sre, col="red", pch=19, cex=2)
 pairs(p224r63_2011)
 # in questo modo posso verificare quale variabile si correla meglio
 # vediamo come in molti casi le bande siano molto correlate
+
+# possiamo quindi compattare un numero superiore di bande mantenendo invariate le informazioni al loro interno
