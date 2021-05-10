@@ -78,3 +78,29 @@ plot(si1, col=cl)
 
 si2<-spectralIndices(defor2,green=3,red=2,nir=1) #dobbiamo dichiarare le bande che abbiamo 
 plot(si2, col=cl) #facciamo la stessa cosa per la seconda immagine
+
+#############################################################################################
+
+#worldwide NDVI
+
+#il pacchetto "rasterdiv" contiene un dataset di copernicus
+
+install.packages("rasterdiv") # significa raster diversity
+library(rasterdiv) # carichiamo il pacchetto rasterdiv
+library(raster)
+library(RStoolbox)
+library(rasterVis)
+
+#possiamo utilizzare il dataset "copNDVI" contenuto nel pacchetto
+
+plot(copNDVI)
+# vogliamo poi togliere tutta la parte che riguarda l'acqua tramite la funzione "cbinc" che cambia dei valori
+# i pixel 253,254,255 (che riguardano l'acqua) possono essere trasformati in non valori NA
+copNDVI<-raster::reclassify(copNDVI,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
+# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA
+plot(copNDVI)
+
+#facciamo il levelplot con il pacchetto rasterVis
+levelplot(copNDVI) # si visualizzano i valori gradati per valore di NDVI nel mondo
+#nella zona dell'equatore c'è il valore massimo di massa percé c'è massima luce e le piante che hanno molta sete di luce si accavallano l'una sull'altra per catturare quanta più luce possibile, atteggiamento tipico delle foreste tropicali
+# a 23° Nord ci sono i deserti, tutti posti sulla stessa linea, perché li l'evapotraspirazione è elevatissima, si generano moti convettivi che fanno risalire aria umida e discendere aria secchissima
