@@ -61,3 +61,12 @@ plot(ndvi_devst5, col=clsd)
 
 #esiste un'altra tecnica per compattare i dati ovvero con l'analisi multivariata e da questa prendiamo solo la banda PC1 e su questa ci facciamo passare la moving window per creare la mappa di deviazione standard derivata da una sola variabile
 
+#dobbiamo utilizzare la funzone "rasterPCA" contenuta in RStoolbox, facciamo la PCA dell'immagine originale
+sentpca<-rasterPCA(sent)
+plot(sentpca$map) #la prima componente mantiene il range di informazione più alta e mantiene in miglior modo le informazioni originali
+#via a via l'informazione diminuisce
+sentpca # visualizziamo in questo modo gli attributi dell'output appena ottenuto
+#facciamo poi un summary
+summary(sentpca$model)
+# si vede anche una proporzione di variabilità
+# la prima PC mostra il 67.36804% dell'informazione originale, a partire da quest'immagine calcoleremo la variabilità
