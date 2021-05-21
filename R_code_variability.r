@@ -3,6 +3,8 @@
 #dobbiamo caricare le diverse librerie dei pacchetti
 library(raster)
 library(RStoolbox)
+library(ggplot2) #per il plot ggplot
+library(gridExtra)
 
 setwd("C:/lab/similaun/")
 
@@ -65,8 +67,64 @@ plot(ndvi_devst5, col=clsd)
 sentpca<-rasterPCA(sent)
 plot(sentpca$map) #la prima componente mantiene il range di informazione più alta e mantiene in miglior modo le informazioni originali
 #via a via l'informazione diminuisce
-sentpca # visualizziamo in questo modo gli attributi dell'output appena ottenuto
+sentpca # visualizziamo in questo modo gli attributi e le componenti dell'output appena ottenuto
 #facciamo poi un summary
 summary(sentpca$model)
 # si vede anche una proporzione di variabilità
 # la prima PC mostra il 67.36804% dell'informazione originale, a partire da quest'immagine calcoleremo la variabilità
+
+#####################################################################################
+
+#richiamiamo i pacchetti utili e selezioniamo la working directory
+# dopodiché richiamiamo l'immagine caricata la scorsa volta
+# infine richiamiamo la pca fatta la scorsa volta
+
+pc1<-sentpca$map$PC1
+sd_pc1<-focal(pc1, w=matrix(1/25,nrow=5,ncol=5),fun=sd)
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) # cambiamo la colorramppalette
+plot(sd_pc1, col=clsd)      
+# siamo ancora interessati a capire come variano i valori su una singola banda
+# sul similaun abbiamo una grande varietà geomorfologica
+
+# funzione "source" : ci permette di richiamare un pezzo di codice esterno
+source("source_test_lezione.r") # in questo modo richiamiamo l'intero codice senza doverlo aprire su R
+
+# dobbiamo installare un altro pacchetto e richiamare pacchetti per riuscire a fare il ggplot
+install.packages("viridis")
+library(viridis) # serve per i colori dei ggplot
+
+source("source_ggplot.r")
+# il ggplot ci permette di fare dei plot molto più belli
+# i file richiamati devono essere all'interno della cartella della working directory
+
+ggplot() + #crea una finestra vuota e il pacchetto mano a mano aggiunge dei blocchi semplicemente con il + e si va a capo
+geom_raster(sd_pc1, mapping=aes(x=x,y=y,fill=layer))+ #dobbiamo definire la geometria da inserire nel ggplot: nel nostro caso stiamo usando una mappa e quindi un raster con pixel
+# successivamente si inseriscono le estetiche (x,y) e il valore, è ciò che vogliamo mappare (aesthetics)
+# con il ggplot la porzione con i crepaci si vede molto bene
+scale_fill_viridis()+ # fa una colorRampPalette senza farla realmente
+ggtitle("Standard deviation of PC1 by viridis colour scale")
+
+# utilizziamo la legenda MAGMA: prima non avevamo selezionato una legenda precisa
+p1<-ggplot() + 
+geom_raster(sd_pc1, mapping=aes(x=x,y=y,fill=layer))+ 
+scale_fill_viridis(option="magma")+ 
+ggtitle("Standard deviation of PC1 by magma colour scale")
+
+#utilizziamo la legenda INFERNO
+p2<-ggplot() + 
+geom_raster(sd_pc1, mapping=aes(x=x,y=y,fill=layer))+ 
+scale_fill_viridis(option="inferno")+ 
+ggtitle("Standard deviation of PC1 by inferno colour scale")
+
+#utilizziamo la legenda TURBO
+p3<-ggplot() + 
+geom_raster(sd_pc1, mapping=aes(x=x,y=y,fill=layer))+ 
+scale_fill_viridis(option="turbo")+ 
+ggtitle("Standard deviation of PC1 by turbo colour scale")
+
+#ora possiamo metterle tutte insieme
+#associo un nome ad ogni scala di colori : ogni plot precedente viene associato ad un oggetto
+
+grid.arrange(p1,p2,p3, nrow=1) # la color ramp rainbow è molt discussa che mette il giallo nei valori medi, il nostro occhio lo percepisce come un valore alto anche se in legenda non è cosi
+# la funzione grid.arrange è contenuta nel pacchetto gridExtra
+
