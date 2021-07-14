@@ -93,18 +93,35 @@ plot(T21, col=cl)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# WORLDWIDE NDVI: con dataset Copernicus
 
-# WORLDWIDE NDVI
+NDVI18<-raster("ndvi18.nc") 
+cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
+NDVI18r<-raster::reclassify(NDVI18,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
+# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+plot(NDVI18r, col=cl)
+levelplot(NDVI18r)
+
+NDVI19<-raster("ndvi19.nc") 
+cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
+NDVI19r<-raster::reclassify(NDVI19,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
+# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+plot(NDVI19r, col=cl)
+levelplot(NDVI19r)
+
+NDVI20<-raster("ndvi20.nc") 
+cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
+NDVI20r<-raster::reclassify(NDVI20,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
+# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+plot(NDVI20r, col=cl)
+levelplot(NDVI20r)
 
 NDVI21<-raster("ndvi21.nc") 
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
 NDVI21r<-raster::reclassify(NDVI21,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
 # riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
-plot(NDVI21, col=cl)
-
-#facciamo il levelplot con il pacchetto rasterVis
-levelplot(copNDVI)
-
+plot(NDVI21r, col=cl)
+levelplot(NDVI21r)
 
 #-------------------------------------------------------------------------
 
