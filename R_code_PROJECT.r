@@ -3,6 +3,7 @@
 #This is the project for the exam of remote sensing 2020-2021
 
 library(raster)
+library(ncdf4)
 setwd("C:/lab/project")
 
 #VEGETATION
@@ -33,4 +34,13 @@ setwd("C:/lab/project")
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # CODICE DATI COPERNICUS
+
+SnowC<-raster("copertura_nevosa_may.nc")
+SnowC 
+cl <- colorRampPalette(c('light blue','green','pink','orange'))(100) 
+plot(SnowC col=cl) 
+
+
+SnowCres<-aggregate(SnowC,fact=100) 
+plot(SnowCres, col=cl) 
 
