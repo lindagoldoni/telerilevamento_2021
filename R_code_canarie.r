@@ -14,12 +14,14 @@ setwd("C:/lab/project/landsat/tenerife")
 
 # NDVI
 #(NIR-RED)/(NIR+RED)
+# B1=NIR, B2=red, B3=green
 
 #NDVI: normalizza il DVI, fa la standardizzazione del DVI sulla somma tra NIR e RED, in modo da ottenere numeri bassi e si possono confrontare immagini con risoluzione radiometrica differente
 #il range dell'NDVI è [-1 , 1]
+B1<-raster("B1.TIF")
+B2<-raster("B2.TIF")
 
-
-ndvi1<-(defor1$defor1.1-defor1$defor1.2)/(defor1$defor1.1+defor1$defor1.2)
+ndvitenerife<-(B1-B2)/(B1+B2)
 plot(ndvi1,col=cl) #vediamo che il range della legenda va da -1 a 1
 # si può scrivere anche:
 #ndvi1<-dvi1/(defor1$defor1.1+defor1$defor1.2)
