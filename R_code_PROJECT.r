@@ -48,22 +48,26 @@ setwd("C:/lab/project")
 # copertura nevosa il 2 gennaio di ogni anno dal 2019 al 2021
 
 Snow18<-raster("snow18.nc") 
+Snow18r<-raster::reclassify(Snow18,cbind(252,255,NA),right=TRUE)
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
 
 Snow19<-raster("snow19.nc")
+Snow19r<-raster::reclassify(Snow19,cbind(252,255,NA),right=TRUE)
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
 
 Snow20<-raster("snow20.nc")
+Snow20r<-raster::reclassify(Snow20,cbind(252,255,NA),right=TRUE)
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
 
 Snow21<-raster("snow21.nc")
+Snow21r<-raster::reclassify(Snow21,cbind(252,255,NA),right=TRUE)
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
 
 par(mfrow=c(2,2))
-plot(Snow18, col=cl) 
-plot(Snow19, col=cl)
-plot(Snow20, col=cl)
-plot(Snow21, col=cl) 
+plot(Snow18r, col=cl) 
+plot(Snow19r, col=cl)
+plot(Snow20r, col=cl)
+plot(Snow21r, col=cl) 
 
 #SnowCres<-aggregate(SnowC,fact=100) 
 #plot(SnowCres, col=cl) 
@@ -90,6 +94,22 @@ plot(T19, col=cl)
 plot(T20, col=cl)
 plot(T21, col=cl) 
 
+# DATI ACQUA NEL SUOLO  
+
+water18<-raster("water18.nc")
+
+water19<-raster("water19.nc")
+
+water20<-raster("water20.nc")
+
+water21<-raster("water21.nc")
+ 
+
+par(mfrow=c(2,2))
+plot(water18) 
+plot(water19)
+plot(water20)
+plot(water21) 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -97,29 +117,25 @@ plot(T21, col=cl)
 
 NDVI18<-raster("ndvi18.nc") 
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI18r<-raster::reclassify(NDVI18,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
-# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+NDVI18r<-raster::reclassify(NDVI18,cbind(252,255,NA),right=TRUE)
 plot(NDVI18r, col=cl)
 levelplot(NDVI18r)
 
 NDVI19<-raster("ndvi19.nc") 
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI19r<-raster::reclassify(NDVI19,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
-# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+NDVI19r<-raster::reclassify(NDVI19,cbind(252,255,NA),right=TRUE)
 plot(NDVI19r, col=cl)
 levelplot(NDVI19r)
 
 NDVI20<-raster("ndvi20.nc") 
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI20r<-raster::reclassify(NDVI20,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
-# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+NDVI20r<-raster::reclassify(NDVI20,cbind(252,255,NA),right=TRUE)
 plot(NDVI20r, col=cl)
 levelplot(NDVI20r)
 
 NDVI21<-raster("ndvi21.nc") 
 cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI21r<-raster::reclassify(NDVI21,cbind(252,255,NA),right=TRUE) #usiamo la funzione reclassify che si lega al pacchetto con i ::
-# riclassifichiamo l'immagine originale e diciamo che i valori scritti (range) devono diventare NA, che corrispondono all'acqua
+NDVI21r<-raster::reclassify(NDVI21,cbind(252,255,NA),right=TRUE)
 plot(NDVI21r, col=cl)
 levelplot(NDVI21r)
 
