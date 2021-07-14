@@ -22,7 +22,8 @@ B1<-raster("B1.TIF")
 B2<-raster("B2.TIF")
 
 ndvitenerife<-(B1-B2)/(B1+B2)
-plot(ndvi1,col=cl) #vediamo che il range della legenda va da -1 a 1
+cl <- colorRampPalette(c('blue','red','yellow'))(100) 
+plot(ndvitenerife,col=cl) 
 # si può scrivere anche:
 #ndvi1<-dvi1/(defor1$defor1.1+defor1$defor1.2)
 # in quanto il numeratore era già associato ad una variabile
