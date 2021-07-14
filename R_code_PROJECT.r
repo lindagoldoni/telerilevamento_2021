@@ -123,19 +123,34 @@ NDVI21r<-raster::reclassify(NDVI21,cbind(252,255,NA),right=TRUE) #usiamo la funz
 plot(NDVI21r, col=cl)
 levelplot(NDVI21r)
 
+lista<-list.files(pattern="ndvi") 
+import<-lapply(lista,raster) # funzione raster alla lista appena creata con la funzione "lapply", lapply(x, fun), in questo modo importiamo le immagini 
+# abbiamo preso i singoli file, abbiamo fatto la lista, l'abbiamo importata in R, possiamo compattarli in un unico file, raggruppandoli dandogli un nome attraverso una funzione
+TGr<-stack(import) # genero un unico file, in questo modo posso plottare il singolo file
+plot(TGr) #plottando il singolo file carica direttamente le 4 immagini caricate nella lista 
+
+# in questo caso avevamo i livelli e con lo stack creiamo la condizione con tante bande
+plotRGB(TGr, 1,2,3, stretch="Lin")
 #-------------------------------------------------------------------------
 
-library(raster)
-library(RStoolbox)
-library(ggplot2)
-library(gridExtra)
-setwd("~/lab/")
+
+
 p224r63 <- brick("p224r63_2011_masked.grd")
 ggRGB(p224r63,3,2,1, stretch="lin")
 ggRGB(p224r63,4,3,2, stretch="lin")
 p1 <- ggRGB(p224r63,3,2,1, stretch="lin")
 p2 <- ggRGB(p224r63,4,3,2, stretch="lin")
 grid.arrange(p1, p2, nrow = 2) # this needs gridExtra
+
+
+
+
+
+
+
+
+#PROCEDURA DA FARE CON IMMAGINI SATELLITARI
+
 
 #-------------------------------------------------------------------------
 
