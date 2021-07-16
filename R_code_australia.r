@@ -78,6 +78,50 @@ plot(ndvi03,col=cl)
 
 Indici03<-spectralIndices(IMG03,green=3,red=2,nir=1)
 plot(Indici03, col=cl)
+
+
+
+
+
+
+# FIRMA SPETTRALE
+
+click(IMG03, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+#dobbiamo dire su quale mappa vogliamo cliccare e definire come vogliamo fare il click ovvero un punto "p" , definiamo dimensione e colore
+
+#      x     y   cell X03.1 X03.2 X03.3
+#1 701.5 637.5 395966   204   202   189
+#2 412.5 271.5 770461   216   205   187
+#3 276.5 206.5 836885   228   217   189
+#4 800.5 218.5 825121   190   192   181
+
+#facciamo una tabella con il numero di banda, poi con uso del suolo (foresta o acqua) e utilizzeremo questo dataframe per creare l'output
+
+#definiamo le colonne del dataset
+band<-c(1,2,3)
+foresta<-c(204,202,189)
+prateria<-c(216,205,187)
+boh<-c(228,217,189)
+acqua<-c(190,192,181)
+
+
+#ora mettiamo tutto in una tabella con la funzione
+spectrals<-data.frame(band,foresta,prateria,boh,acqua)
+
+#plottiamo la firma spettrale
+ggplot(spectrals,aes(x=band))+ 
+       geom_line(aes(y=foresta), color="green")+ 
+       geom_line(aes(y=prateria),color="yellow")+
+       geom_line(aes(y=boh),color="black")+
+       geom_line(aes(y=acqua),color="blue")+
+       labs(x="band",y="reflectance")
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # 2019
 
@@ -155,42 +199,39 @@ p1 <- ggRGB(IMG03,3,2,1, stretch="lin")
 p2 <- ggRGB(IMG03,4,3,2, stretch="lin")
 grid.arrange(p1, p2, nrow = 2) 
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# FIRMA SPETTRALE
+
+click(IMG03, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+#dobbiamo dire su quale mappa vogliamo cliccare e definire come vogliamo fare il click ovvero un punto "p" , definiamo dimensione e colore
+
+#      x     y   cell X03.1 X03.2 X03.3
+#1 573.5 409.5 629310   183   185   172
+#2 430.5 272.5 769455   198   201   180
+#3 286.5 219.5 823583   207   205   182
+#4 809.5 292.5 749354   168   181   187
 
 
+#facciamo una tabella con il numero di banda, poi con uso del suolo (foresta o acqua) e utilizzeremo questo dataframe per creare l'output
+
+#definiamo le colonne del dataset
+band<-c(1,2,3)
+foresta<-c(183,185,172)
+prateria<-c(198,201,180)
+boh<-c(207,205,182)
+acqua<-c(168,181,187)
 
 
+#ora mettiamo tutto in una tabella con la funzione
+spectrals<-data.frame(band,foresta,prateria,boh,acqua)
 
-
-par(mfrow=c(2,1))
-plotRGB(defor1,r=1,g=2,b=3,stretch="lin")
-plotRGB(defor2,r=1,g=2,b=3,stretch="lin")
-
-# in questo modo facciamo un analisi multitemporale
-# vediamo che siamo nella stessa zona ma nella prima immagine il fiume si presenta più acceso perché probabilmente aveva più sali disciolti che assorbe meno l'infrarosso
-# se il fiume fosse nero significa che è acqua pura perché assorbe tutto l'infrarosso
-# tutta la parte rossa è vegetazione di foresta pluviale, la parte chiara è suolo agricolo
-
-# utilizziamo il DVI che è la differenza tra riflettanza dell'infrarosso vicino e la riflettanza del rosso
-#il pixel di vegetazione sana ha il massimo di riflettanza nel NIR e il minimo di riflettanza nel RED perché viene assorbita (solitamente è vicino a 0)
-# possiamo normalizzarlo generando NDVI e si fa NIR-RED/NIR+RED
-
-# rpima di tutto richiamiamo i pacchetti e settiamo la working directory
-# carichiamo le immagini con "brick"
-# successivamente plottiamo le immagini con il plotRGB
-
-dvi1<- defor1$defor1.1 - defor1$defor1.2 #vediamo negli attributi i nomi delle bande NIR e RED e li leghiamo con il $ al nome dell'immagine, in questo modo stiamo facendo la differenza tra le due bande dell'immagine
-plot(dvi1) # visualizziamo il prodotto grezzo con i colori di R
-# le parti deforestate vengono visualizzate bene il rossastro e le parti vegetate in verde
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # cambiamo il colore all'immagine
-plot(dvi1, col=cl, main="DVI at time 1") # tutto ciò che è rosso è vegetazione, aggiungiamo anche il titolo
-# essendo al bordo nel lato superiore si genera un artefatto che non esiste realmente
-
-dvi2<- defor2$defor2.1 - defor2$defor2.2 
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
-plot(dvi2, col=cl, main="DVI at time 2") # la parte gialla è suolo nudo e il rosso è la vegetazione
-# faremo un calcolo per ricavare la percentuale di foresta persa nel tempo
-
-
+#plottiamo la firma spettrale
+ggplot(spectrals,aes(x=band))+ 
+       geom_line(aes(y=foresta), color="green")+ 
+       geom_line(aes(y=prateria),color="yellow")+
+       geom_line(aes(y=boh),color="black")+
+       geom_line(aes(y=acqua),color="blue")+
+       labs(x="band",y="reflectance")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
