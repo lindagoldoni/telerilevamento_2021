@@ -146,6 +146,15 @@ set.seed(42)
 soc<-unsuperClass(IMG03, nClasses=6) 
 plot(soc$map)
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# GGPLOT
+
+ggRGB(IMG03,3,2,1, stretch="lin")
+ggRGB(IMG03,4,3,2, stretch="lin")
+p1 <- ggRGB(IMG03,3,2,1, stretch="lin")
+p2 <- ggRGB(IMG03,4,3,2, stretch="lin")
+grid.arrange(p1, p2, nrow = 2) 
+
 
 
 
