@@ -10,9 +10,8 @@ library(ggplot2)
 library(raster)
 library(ncdf4)
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 2020
-setwd("C:/lab/project/australia/2020/01")
+#---------------------------------------------------------------------------------------------------------------------------------------
+# DIFFERENZA NDVI 
 
 # NDVI
 #(NIR-RED)/(NIR+RED)
@@ -21,72 +20,125 @@ setwd("C:/lab/project/australia/2020/01")
 #NDVI: normalizza il DVI, fa la standardizzazione del DVI sulla somma tra NIR e RED, in modo da ottenere numeri bassi e si possono confrontare immagini con risoluzione radiometrica differente
 #il range dell'NDVI è [-1 , 1]
 
-IMG01 <- brick("01.jpeg")
-IMG01
-plotRGB(IMG01,r=1,g=2,b=3,stretch="lin")
+setwd("C:/lab/project/australia/all")
 
-B101<-IMG01$X01.1
-B201<-IMG01$X01.2
+#IMG01
 
-cl <- colorRampPalette(c('white','orange','red','pink','purple','blue'))(100)
-par(mfrow=c(1,2))
-plot(B101, col=cl)
-plot(B201, col=cl)
+img01_19 <- brick("01_2019.jpeg")
+img01_20 <- brick("01_2020.jpeg")
 
-ndvi01<-(B101-B201)/(B101+B201)
-plot(ndvi01,col=cl) 
+B101_19<-img01_19$X01_2019.1
+B201_19<-img01_19$X01_2019.2
+
+ndvi01_19<-(B101_19-B201_19)/(B101_19+B201_19)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi01_19,col=cls)
+
+#------------------------------------------------------
+
+B101_20<-img01_20$X01_2020.1
+B201_20<-img01_20$X01_2020.2
+
+ndvi01_20<-(B101_20-B201_20)/(B101_20+B201_20)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi01_20,col=cls)
+
+#--------------------------------------------------
+
+difndvi_01<-ndvi01_19-ndvi01_20
+cld <- colorRampPalette(c('dark green','red','purple','yellow','brown','black'))(100)
+plot(difndvi_01,col=cld)
+
+
+#-------------------------------------------------------------------------------------------
+
+#IMG02
+
+img02_19 <- brick("02_2019.jpeg")
+img02_20 <- brick("02_2020.jpeg")
+
+B102_19<-img02_19$X02_2019.1
+B202_19<-img02_19$X02_2019.2
+
+ndvi02_19<-(B102_19-B202_19)/(B102_19+B202_19)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi02_19,col=cls)
+
+#------------------------------------------------------
+
+B102_20<-img02_20$X02_2020.1
+B202_20<-img02_20$X02_2020.2
+
+ndvi02_20<-(B102_20-B202_20)/(B102_20+B202_20)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi02_20,col=cls)
+
+#--------------------------------------------------
+
+difndvi_02<-ndvi02_19-ndvi02_20
+cld <- colorRampPalette(c('dark green','red','purple','yellow','brown','black'))(100)
+plot(difndvi_02,col=cld)
+
+
+#-------------------------------------------------------------------------------------------
+
+#IMG03
+
+img03_19 <- brick("03_2019.jpeg")
+img03_20 <- brick("03_2020.jpeg")
+
+B103_19<-img03_19$X03_2019.1
+B203_19<-img03_19$X03_2019.2
+
+ndvi03_19<-(B103_19-B203_19)/(B103_19+B203_19)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi03_19,col=cls)
+
+#------------------------------------------------------
+
+B103_20<-img03_20$X03_2020.1
+B203_20<-img03_20$X03_2020.2
+
+ndvi03_20<-(B103_20-B203_20)/(B103_20+B203_20)
+cls <- colorRampPalette(c('red','white','blue'))(100)
+plot(ndvi03_20,col=cls)
+
+#--------------------------------------------------
+
+difndvi_03<-ndvi03_19-ndvi03_20
+cld <- colorRampPalette(c('dark green','red','purple','yellow','brown','black'))(100)
+plot(difndvi_03,col=cld)
+
+#--------------------------------------------------
 
 # in RStoolbox esistono tantissimi indici da poter calcolare con una funzione "spectralIndices", con un solo comando posso calcolare una moltitudine di indici
 
-Indici01<-spectralIndices(IMG01,green=3,red=2,nir=1)
-plot(Indici01, col=cl)
-#--------------------------------------------
-setwd("C:/lab/project/australia/2020/02")
-IMG02 <- brick("02.jpeg")
-IMG02
-plotRGB(IMG02,r=1,g=2,b=3,stretch="lin")
+Indici01_19<-spectralIndices(img01_19 ,green=3,red=2,nir=1)
+plot(Indici01_19 , col=cls)
 
-B102<-IMG02$X02.1
-B202<-IMG02$X02.2
+Indici02_19<-spectralIndices(img02_19 ,green=3,red=2,nir=1)
+plot(Indici02_19 , col=cls)
 
-cl <- colorRampPalette(c('white','orange','red','pink','purple','blue'))(100)
-par(mfrow=c(1,2))
-plot(B102, col=cl)
-plot(B202, col=cl)
+Indici03_19<-spectralIndices(img03_19 ,green=3,red=2,nir=1)
+plot(Indici03_19 , col=cls)
 
-ndvi02<-(B102-B202)/(B102+B202)
-plot(ndvi02,col=cl) 
+Indici01_20<-spectralIndices(img01_20 ,green=3,red=2,nir=1)
+plot(Indici01_19 , col=cls)
 
-Indici02<-spectralIndices(IMG02,green=3,red=2,nir=1)
-plot(Indici02, col=cl)
-#--------------------------------------------
-setwd("C:/lab/project/australia/2020/03")
-IMG03 <- brick("03.jpeg")
-IMG03
-plotRGB(IMG03,r=1,g=2,b=3,stretch="lin")
+Indici02_20<-spectralIndices(img02_20 ,green=3,red=2,nir=1)
+plot(Indici02_20 , col=cls)
 
-B103<-IMG03$X03.1
-B203<-IMG03$X03.2
+Indici03_20<-spectralIndices(img03_20 ,green=3,red=2,nir=1)
+plot(Indici03_20 , col=cls)
 
-cl <- colorRampPalette(c('white','red','blue'))(100)
-par(mfrow=c(1,2))
-plot(B103, col=cl)
-plot(B203, col=cl)
-
-ndvi03<-(B103-B203)/(B103+B203)
-plot(ndvi03,col=cl) 
-
-Indici03<-spectralIndices(IMG03,green=3,red=2,nir=1)
-plot(Indici03, col=cl)
-
-
-
-
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # FIRMA SPETTRALE
 
-click(IMG03, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+plotRGB(img01_19,r=1,g=2,b=3,stretch="lin")
+click(img01_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
 #dobbiamo dire su quale mappa vogliamo cliccare e definire come vogliamo fare il click ovvero un punto "p" , definiamo dimensione e colore
 
 #      x     y   cell X03.1 X03.2 X03.3
@@ -116,6 +168,61 @@ ggplot(spectrals,aes(x=band))+
        geom_line(aes(y=acqua),color="blue")+
        labs(x="band",y="reflectance")
 
+#--------------------------------------------------
+plotRGB(img02_19,r=1,g=2,b=3,stretch="lin")
+click(img02_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------
+plotRGB(img03_19,r=1,g=2,b=3,stretch="lin")
+click(img03_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------
+plotRGB(img01_20,r=1,g=2,b=3,stretch="lin")
+click(img01_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
+plotRGB(img02_20,r=1,g=2,b=3,stretch="lin")
+click(img02_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
+plotRGB(img03_20,r=1,g=2,b=3,stretch="lin")
+click(img03_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow")
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 #ALBEDO
 
@@ -125,68 +232,6 @@ cl <- colorRampPalette(c('yellow','dark green','red','brown'))(100)
 plot(albedo20, col=cl)
 
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 2019
-
-setwd("C:/lab/project/australia/2019/01")
-IMG01 <- brick("01.jpeg")
-IMG01
-plotRGB(IMG01,r=1,g=2,b=3,stretch="lin")
-
-B101<-IMG01$X01.1 
-B201<-IMG01$X01.2
-
-cl <- colorRampPalette(c('white','orange','red','pink','purple','blue'))(100)
-par(mfrow=c(1,2))
-plot(B101, col=cl)
-plot(B201, col=cl)
-
-ndvi01<-(B101-B201)/(B101+B201)
-plot(ndvi01,col=cl) 
-
-Indici01<-spectralIndices(IMG01,green=3,red=2,nir=1)
-plot(Indici01, col=cl)
-#--------------------------------------------
-setwd("C:/lab/project/australia/2019/02")
-IMG02 <- brick("02.jpeg")
-IMG02
-plotRGB(IMG02,r=1,g=2,b=3,stretch="lin")
-
-B102<-IMG02$X02.1 
-B202<-IMG02$X02.2
-
-cl <- colorRampPalette(c('white','orange','red','pink','purple','blue'))(100)
-par(mfrow=c(1,2))
-plot(B102, col=cl)
-plot(B202, col=cl)
-
-ndvi02<-(B102-B202)/(B102+B202)
-plot(ndvi02,col=cl) 
-
-Indici02<-spectralIndices(IMG02,green=3,red=2,nir=1)
-plot(Indici02, col=cl)
-#--------------------------------------------
-setwd("C:/lab/project/australia/2019/03")
-IMG03 <- brick("03.jpeg")
-IMG03
-plotRGB(IMG03,r=1,g=2,b=3,stretch="lin")
-
-B103<-IMG03$X03.1
-B203<-IMG03$X03.2
-
-cl <- colorRampPalette(c('white','red','blue'))(100)
-par(mfrow=c(1,2))
-plot(B103, col=cl)
-plot(B203, col=cl)
-
-ndvi03<-(B103-B203)/(B103+B203)
-cls <- colorRampPalette(c('red','white','blue'))(100)
-plot(ndvi03,col=cls) 
-
-Indici03<-spectralIndices(IMG03,green=3,red=2,nir=1)
-plot(Indici03, col=cl)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # UNSUPERVISORED CLASSIFICATION
@@ -249,4 +294,3 @@ plot(albedo19, col=cl)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# DIFFERENZA NDVI 
