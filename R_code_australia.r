@@ -117,7 +117,12 @@ ggplot(spectrals,aes(x=band))+
        labs(x="band",y="reflectance")
 
 
+#ALBEDO
 
+albedo20<-raster("albedo20.nc") 
+albedo20<-raster::reclassify(albedo20,cbind(252,255,NA),right=TRUE)
+cl <- colorRampPalette(c('yellow','dark green','red','brown'))(100)
+plot(albedo20, col=cl)
 
 
 
@@ -233,5 +238,15 @@ ggplot(spectrals,aes(x=band))+
        geom_line(aes(y=acqua),color="blue")+
        labs(x="band",y="reflectance")
 
+
+#ALBEDO
+
+albedo19<-raster("albedo19.nc") 
+albedo19<-raster::reclassify(albedo19,cbind(252,255,NA),right=TRUE)
+cl <- colorRampPalette(c('yellow','dark green','red','brown'))(100)
+plot(albedo19, col=cl)
+
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# DIFFERENZA NDVI 
