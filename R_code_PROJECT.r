@@ -10,343 +10,171 @@ library(ggplot2)
 library(raster)
 library(ncdf4)
 
-setwd("C:/lab/project")
 
-#VEGETATION
+setwd("C:/lab/project/australia/all")
+# PLOT IMMAGINI .JPG
 
-#NDVI . differenza fra l'infrarosso e il rosso assorbito dalla vegetazione (infrarosso viene riflesso e rosso viene assorbito) i valori di riflettanza sono più alti nell'infrarosso e più bassi nel rosso 
-# facendo la differenza ottengo la quantità di biomassa presente come vegetazione, questa differenza può essere poi normalizzata sulla loro somma
+#------------2019-------------------
 
-# Soil Water Index . Indice del contenuto d'acqua nel suolo, misura la condizione di umidità nel suolo in un certo strato di suolo (abbastanza spesso)
+#01_2019
+list01_19<-list.files(pattern="01_2019") 
+import01_19<-lapply(list01_19,raster)
+TGr01_19<-stack(import01_19)
+plot(TGr01_19) 
+jpeg("01_2019.jpg", 600, 800)
+plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-#ENERGY
+#02_2019
+list02_19<-list.files(pattern="02_2019") 
+import02_19<-lapply(list02_19,raster)
+TGr02_19<-stack(import02_19)
+plot(TGr02_19) 
+jpeg("02_2019.jpg", 600, 800)
+plotRGB(TGr02_19,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-# Albedo . quantità di luce riflessa dal suolo
+#03_2019
+list03_19<-list.files(pattern="03_2019") 
+import03_19<-lapply(list03_19,raster)
+TGr03_19<-stack(import03_19)
+plot(TGr03_19) 
+jpeg("03_2019.jpg", 600, 800)
+plotRGB(TGr03_19,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-#Land Surface Temperature . temperatura al suolo 
+#------------2020-------------------
 
-#WATER
+#01_2020
+list01_20<-list.files(pattern="01_2020") 
+import01_20<-lapply(list01_20,raster)
+TGr01_20<-stack(import01_20)
+plot(TGr01_20) 
+jpeg("01_2020.jpg", 600, 800)
+plotRGB(TGr01_20,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-#Lake Water Quality . eutrofizzazione che si riperquote sugli organismi al loro interno
+#02_2020
+list02_20<-list.files(pattern="02_2020") 
+import02_20<-lapply(list02_20,raster)
+TGr02_20<-stack(import02_20)
+plot(TGr02_20) 
+jpeg("02_2020.jpg", 600, 800)
+plotRGB(TGr02_20,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-#Lake Water Temperature . 
+#03_2020
+list03_20<-list.files(pattern="03_2020") 
+import03_20<-lapply(list03_20,raster)
+TGr03_20<-stack(import03_20)
+plot(TGr03_20) 
+jpeg("03_2020.jpg", 600, 800)
+plotRGB(TGr03_20,r=5,g=4,b=3,stretch="lin")
+dev.off()
 
-#Water level . 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#CRYOSPHERE
+#NDVI 
+#Band 4 - Red
+#Band 5 - Near Infrared
 
-#Snow cover . molto importante perché indice di cambiamento climatico e soprattutto è una condizione importante per mantenere l'ecosistema montano e tutti i suoi abitanti
-
-# CARATTERIZZAZIONE MINERALOGICA/VEGETAZIONALE DELLE ISOLE CANARIE TRAMITE UNSUPERVISORED CLASSIFICATION E NDVI
-
-# RELAZIONE TRA COPERTURA NEVOSA, TEMPERATURA AL SUOLO ED NDVI, TRAMITE ANALISI MULTITEMPORALE 
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# CODICE DATI COPERNICUS
-
-# copertura nevosa il 2 gennaio di ogni anno dal 2019 al 2021
-
-Snow18<-raster("snow18.nc") 
-Snow18r<-raster::reclassify(Snow18,cbind(252,255,NA),right=TRUE)
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-Snow19<-raster("snow19.nc")
-Snow19r<-raster::reclassify(Snow19,cbind(252,255,NA),right=TRUE)
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-Snow20<-raster("snow20.nc")
-Snow20r<-raster::reclassify(Snow20,cbind(252,255,NA),right=TRUE)
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-Snow21<-raster("snow21.nc")
-Snow21r<-raster::reclassify(Snow21,cbind(252,255,NA),right=TRUE)
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-par(mfrow=c(2,2))
-plot(Snow18r, col=cl) 
-plot(Snow19r, col=cl)
-plot(Snow20r, col=cl)
-plot(Snow21r, col=cl) 
-
-#SnowCres<-aggregate(SnowC,fact=100) 
-#plot(SnowCres, col=cl) 
-
-# DATI TEMPERATURA
-
-#temperature delle 13.30
-
-T18<-raster("T18.nc") 
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-T19<-raster("T19.nc")
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-T20<-raster("T20.nc")
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-T21<-raster("T21.nc")
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-
-par(mfrow=c(2,2))
-plot(T18, col=cl) 
-plot(T19, col=cl)
-plot(T20, col=cl)
-plot(T21, col=cl) 
-
-# DATI ACQUA NEL SUOLO  
-
-water18<-raster("water18.nc")
-
-water19<-raster("water19.nc")
-
-water20<-raster("water20.nc")
-
-water21<-raster("water21.nc")
- 
-
-par(mfrow=c(2,2))
-plot(water18) 
-plot(water19)
-plot(water20)
-plot(water21) 
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# WORLDWIDE NDVI: con dataset Copernicus
-
-NDVI18<-raster("ndvi18.nc") 
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI18r<-raster::reclassify(NDVI18,cbind(252,255,NA),right=TRUE)
-plot(NDVI18r, col=cl)
-levelplot(NDVI18r)
-
-NDVI19<-raster("ndvi19.nc") 
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI19r<-raster::reclassify(NDVI19,cbind(252,255,NA),right=TRUE)
-plot(NDVI19r, col=cl)
-levelplot(NDVI19r)
-
-NDVI20<-raster("ndvi20.nc") 
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI20r<-raster::reclassify(NDVI20,cbind(252,255,NA),right=TRUE)
-plot(NDVI20r, col=cl)
-levelplot(NDVI20r)
-
-NDVI21<-raster("ndvi21.nc") 
-cl <- colorRampPalette(c('yellow','red','purple','blue'))(100) 
-NDVI21r<-raster::reclassify(NDVI21,cbind(252,255,NA),right=TRUE)
-plot(NDVI21r, col=cl)
-levelplot(NDVI21r)
-
-lista<-list.files(pattern="ndvi") 
-import<-lapply(lista,raster) # funzione raster alla lista appena creata con la funzione "lapply", lapply(x, fun), in questo modo importiamo le immagini 
-# abbiamo preso i singoli file, abbiamo fatto la lista, l'abbiamo importata in R, possiamo compattarli in un unico file, raggruppandoli dandogli un nome attraverso una funzione
-TGr<-stack(import) # genero un unico file, in questo modo posso plottare il singolo file
-plot(TGr) #plottando il singolo file carica direttamente le 4 immagini caricate nella lista 
-
-# in questo caso avevamo i livelli e con lo stack creiamo la condizione con tante bande
-plotRGB(TGr, 1,2,3, stretch="Lin")
-#-------------------------------------------------------------------------
-
-
-
-p224r63 <- brick("p224r63_2011_masked.grd")
-ggRGB(p224r63,3,2,1, stretch="lin")
-ggRGB(p224r63,4,3,2, stretch="lin")
-p1 <- ggRGB(p224r63,3,2,1, stretch="lin")
-p2 <- ggRGB(p224r63,4,3,2, stretch="lin")
-grid.arrange(p1, p2, nrow = 2) # this needs gridExtra
-
-
-
-
-
-
-
-
-#PROCEDURA DA FARE CON IMMAGINI SATELLITARI
-
-
-#-------------------------------------------------------------------------
-
-# NDVI
-
-#R_code_vegetation_indices.r
-
-defor1<-brick("defor1.jpg")
-defor2<-brick("defor2.jpg")
-
+#(NIR-RED)/(NIR+RED)
 # B1=NIR, B2=red, B3=green
-
-par(mfrow=c(2,1))
-plotRGB(defor1,r=1,g=2,b=3,stretch="lin")
-plotRGB(defor2,r=1,g=2,b=3,stretch="lin")
-
-# in questo modo facciamo un analisi multitemporale
-# vediamo che siamo nella stessa zona ma nella prima immagine il fiume si presenta più acceso perché probabilmente aveva più sali disciolti che assorbe meno l'infrarosso
-# se il fiume fosse nero significa che è acqua pura perché assorbe tutto l'infrarosso
-# tutta la parte rossa è vegetazione di foresta pluviale, la parte chiara è suolo agricolo
-
-# utilizziamo il DVI che è la differenza tra riflettanza dell'infrarosso vicino e la riflettanza del rosso
-#il pixel di vegetazione sana ha il massimo di riflettanza nel NIR e il minimo di riflettanza nel RED perché viene assorbita (solitamente è vicino a 0)
-# possiamo normalizzarlo generando NDVI e si fa NIR-RED/NIR+RED
-
-# rpima di tutto richiamiamo i pacchetti e settiamo la working directory
-# carichiamo le immagini con "brick"
-# successivamente plottiamo le immagini con il plotRGB
-
-dvi1<- defor1$defor1.1 - defor1$defor1.2 #vediamo negli attributi i nomi delle bande NIR e RED e li leghiamo con il $ al nome dell'immagine, in questo modo stiamo facendo la differenza tra le due bande dell'immagine
-plot(dvi1) # visualizziamo il prodotto grezzo con i colori di R
-# le parti deforestate vengono visualizzate bene il rossastro e le parti vegetate in verde
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # cambiamo il colore all'immagine
-plot(dvi1, col=cl, main="DVI at time 1") # tutto ciò che è rosso è vegetazione, aggiungiamo anche il titolo
-# essendo al bordo nel lato superiore si genera un artefatto che non esiste realmente
-
-dvi2<- defor2$defor2.1 - defor2$defor2.2 
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
-plot(dvi2, col=cl, main="DVI at time 2") # la parte gialla è suolo nudo e il rosso è la vegetazione
-# faremo un calcolo per ricavare la percentuale di foresta persa nel tempo
-
-par(mfrow=c(2,1))
-plot(dvi1, col=cl, main="DVI at time 1")
-plot(dvi2, col=cl, main="DVI at time 2")
-# le mettiamo in un'unica finetsra per confrontarle e successivamente facciamo il calcolo
-
-difdvi<- dvi1-dvi2 # facciamo la differenza tra le due mappe e compare un messaggio ( Raster objects have different extents. Result for their intersection is returned)
-# ci dice che l'estenzione delle due mappe non è la stessa, molto probabilmente ci sono alcuni pixel in piu in una rispetto all'altra
-
-cld <- colorRampPalette(c('blue','white','red'))(100) 
-plot(difdvi,col=cld)
-# dove ho valori di differenza più marcata la mappa è rossa, dove la differenza è bassa abbiamo il bianco e il celeste
-# ci dice dove c'è stata della sofferenza vegetativa nell nostra area
 
 #NDVI: normalizza il DVI, fa la standardizzazione del DVI sulla somma tra NIR e RED, in modo da ottenere numeri bassi e si possono confrontare immagini con risoluzione radiometrica differente
 #il range dell'NDVI è [-1 , 1]
 
-#NDVI
-#(NIR-RED)/(NIR+RED)
-ndvi1<-(defor1$defor1.1-defor1$defor1.2)/(defor1$defor1.1+defor1$defor1.2)
-plot(ndvi1,col=cl) #vediamo che il range della legenda va da -1 a 1
-# si può scrivere anche:
-#ndvi1<-dvi1/(defor1$defor1.1+defor1$defor1.2)
-# in quanto il numeratore era già associato ad una variabile
-# in RStoolbox esistono tantissimi indici da poter calcolare con una funzione "spectralIndices", con un solo comando posso calcolare una moltitudine di indici
+#Band 1 - Coastal / Aerosol
+#Band 2 - Blue
+#Band 3 - Green
+#Band 4 - Red
+#Band 5 - Near Infrared
+#Band 6 - Short Wavelength Infrared
+#Band 7 - Short Wavelength Infrared
+#Band 8 - Panchromatic
+#Band 9 - Cirrus
 
-ndvi2<-dvi2/(defor2$defor2.1+defor2$defor2.2)
-plot(ndvi2,col=cl) # anche in questo caso viene visualizzata molto bene la differenza di vegetazione
+#------------2019-------------------
 
-difndvi<-ndvi1-ndvi2
-plot(difndvi,col=cld)
+#NDVI 01_2019
+B501_2019<-brick("B501_2019.TIF")
+B401_2019<-brick("B401_2019.TIF")
+ndvi01_2019<-(B501_2019-B401_2019)/(B501_2019+B401_2019)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi01_2019.jpg", 600, 800)
+plot(ndvi01_2019, col=cl)
+dev.off()
 
-#RStoolbox: spectralIndices
-library(RStoolbox) # dobbiamo richiamare questo pacchetto
-si1<-spectralIndices(defor1,green=3,red=2,nir=1) #dobbiamo dichiarare le bande che abbiamo 
-plot(si1, col=cl)
-# ci sono i DVI e l'NDVI e altri molteplici indici
-#NDWI lavora sull'acqua, quindi non solo sulla vegetazione
+#NDVI 02_2019
+B502_2019<-brick("B502_2019.TIF")
+B402_2019<-brick("B402_2019.TIF")
+ndvi02_2019<-(B502_2019-B402_2019)/(B502_2019+B402_2019)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi02_2019.jpg", 600, 800)
+plot(ndvi02_2019, col=cl)
+dev.off()
 
-si2<-spectralIndices(defor2,green=3,red=2,nir=1) #dobbiamo dichiarare le bande che abbiamo 
-plot(si2, col=cl) #facciamo la stessa cosa per la seconda immagine
+#NDVI 03_2019
+B503_2019<-brick("B503_2019.TIF")
+B403_2019<-brick("B403_2019.TIF")
+ndvi03_2019<-(B503_2019-B403_2019)/(B503_2019+B403_2019)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi03_2019.jpg", 600, 800)
+plot(ndvi03_2019, col=cl)
+dev.off()
 
+#------------2020-------------------
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#NDVI 01_2020
+B501_2020<-brick("B501_2020.TIF")
+B401_2020<-brick("B401_2020.TIF")
+ndvi01_2020<-(B501_2020-B401_2020)/(B501_2020+B401_2020)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi01_2020.jpg", 600, 800)
+plot(ndvi01_2020, col=cl)
+dev.off()
 
-# CODICE CLASSIFICAZIONE NON SUPERVISIONATA
+#NDVI 02_2020
+B502_2020<-brick("B502_2020.TIF")
+B402_2020<-brick("B402_2020.TIF")
+ndvi02_2020<-(B502_2020-B402_2020)/(B502_2020+B402_2020)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi02_2020.jpg", 600, 800)
+plot(ndvi02_2020, col=cl)
+dev.off()
 
-#NIR 1, RED 2, GREEN 3
+#NDVI 03_2019
+B503_2020<-brick("B503_2020.TIF")
+B403_2020<-brick("B403_2020.TIF")
+ndvi03_2020<-(B503_2020-B403_2020)/(B503_2020+B403_2020)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
+jpeg("ndvi03_2020.jpg", 600, 800)
+plot(ndvi03_2020, col=cl)
+dev.off()
 
-defor1<-brick("defor1.jpg") #carichiamo l'immagine 
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin") # in questo modo plottiamo l'immagine con i colori reali
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# con la funzione "ggRGB" raggruppa le varie bande in una sola e le discretizza su assi x e y
-ggRGB(defor1, r=1, g=2, b=3, stretch="lin")
+# DIFFERENZA NDVI
 
-#fcciamo la stessa cosa con la seconda immagine
-defor2<-brick("defor2.jpg") 
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
-ggRGB(defor2, r=1, g=2, b=3, stretch="lin")
+#IMG01 2019 -> 2020
+difndviIMG01<-(ndvi01_2020-ndvi01_2019)
+cls <- colorRampPalette(c('white','red','blue'))(100)
+jpeg("difndviIMG01.jpg", 600, 800)
+plot(difndviIMG01, col=cls)
+dev.off()
 
-par(mfrow=c(2,1))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin")
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
+#IMG02 2019 -> 2020
+difndviIMG02<-(ndvi02_2020-ndvi02_2019)
+cls <- colorRampPalette(c('white','red','blue'))(100)
+jpeg("difndviIMG02.jpg", 600, 800)
+plot(difndviIMG02, col=cls)
+dev.off()
 
-#multiframe with ggplot2 and gridExtra
-install.packages("gridExtra")
-library(gridExtra)
-# con la funzione contenuta in questo pacchetto "grid.arrange" possiamo inserire diverse immagini in un plot
-# mette insieme vari pezzi all'interno del grafico
+#IMG03 2019 -> 2020
+difndviIMG03<-(ndvi03_2020-ndvi03_2019)
+cls <- colorRampPalette(c('white','red','blue'))(100)
+jpeg("difndviIMG03.jpg", 600, 800)
+plot(difndviIMG03, col=cls)
+dev.off()
 
-p1<- ggRGB(defor1, r=1, g=2, b=3, stretch="lin")
-p2<- ggRGB(defor2, r=1, g=2, b=3, stretch="lin")
-grid.arrange(p1, p2, nrow=2)
-
-#############################################
-
-defor1<-brick("defor1.jpg") 
-defor2<-brick("defor2.jpg")
-ggRGB(defor1, r=1, g=2, b=3, stretch="lin")
-ggRGB(defor2, r=1, g=2, b=3, stretch="lin")
-
-#con unsuperClass facciamo la classificazione non supervisionata da noi e fa tutto il sistema 
-d1c<- unsuperClass(defor1,nClasses=2) # è case sensitive prciò dobbiamo stare sepre attenti alle maiuscole
-d1c # vediamo gli attributi della classificazione appena fatta
-plot(d1c$map) # in questo modo plotto la mappa della classificazione e scegli il sistema a cosa assegnare le classi
-#class1: forest
-#class2: agricolture
-
-d2c<- unsuperClass(defor2,nClasses=2)
-d2c
-plot(d2c$map)
-#class1: forest
-#class2: agricolture
-
-#con 3 classi
-d2c3<- unsuperClass(defor2,nClasses=3)
-plot(d2c3$map)
-
-#ognuno parte da campioni random iniziali differenti e i risultati possono venire diversi
-#vogliamo calcolare la frequenza dei pixel di una certa classe (quante volte ho i pixel della classe di "foresta"?) ovvero calcoliamo la FREQUENZA
-# la funzione da usare è "freq": che calcola la frequenza
-
-#frequences
-freq(d1c$map)
-#     value  count
-#[1,]     1 306208
-#[2,]     2  35084
-#i numeri tra di noi sono diversi leggermente
-#calcoliamo la proporzione o percentuale
-
-s1<-306208+35084 #sommiamo per trovare il numero totale di pixel
-prop1<-freq(d1c$map)/s1  #in questo modo ricaviamo le proporzioni, anche qui i numeri tra di noi risultano leggermente differenti
-# prop forest: 0.8972024
-# prop agricolture: 0.1027976
-
-#defor2 ha un numero di pixel diverso rispetto defor1 perché contornati in maniera diversa
-s2<-342726
-prop2<-freq(d2c$map)/s2
-#prop forest: 0.5209847
-#prop agricolture: 0.4790153
-
-# si possono fare le percentuali moltiplicando semplicemente per 100
-
-#build a dataframe
-cover<- c("Forest","Agricolture")
-percent_1992<-c(89.72, 10.16)
-percent_2006<-c(52.09, 47.90)
-#usando la funzione "data.frame" genera il dataframe
-
-percentages<-data.frame(cover,percent_1992,percent_2006)
-percentages
-# si genera un dataset da poter utilizzare quando è possibile
-# con ggplot2 possiamo poi generare il grafico
-# la funzione ggplot plotta un dataset definendo colonne e i colori a piacimento
-
-p1<-ggplot(percentages,aes(x=cover,percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
-# vediamo su un grafico la percentuale di campo per agricoltura e la percentuale di foresta
-# la legenda è stata definita con "color=cover"
-p2<-ggplot(percentages,aes(x=cover,percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
-#nel 2006 si vede come le percentuali si avvicinano nettamente in quanto diminuisce drasticamente la foresta e aumenta la porzione coltivata
-
-grid.arrange(p1,p2,nrow=1) # in questo modo mettiamo i plot insieme in uno solo
 
