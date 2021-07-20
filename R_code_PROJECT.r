@@ -102,7 +102,7 @@ B401_2019<-brick("B401_2019.TIF")
 ndvi01_2019<-(B501_2019-B401_2019)/(B501_2019+B401_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi01_2019.jpg", 600, 800)
-plot(ndvi01_2019, col=cl)
+plot(ndvi01_2019, col=cl, main="NDVI 2019 - 01")
 dev.off()
 
 #NDVI 02_2019
@@ -111,7 +111,7 @@ B402_2019<-brick("B402_2019.TIF")
 ndvi02_2019<-(B502_2019-B402_2019)/(B502_2019+B402_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi02_2019.jpg", 600, 800)
-plot(ndvi02_2019, col=cl)
+plot(ndvi02_2019, col=cl,main="NDVI 2019 - 02")
 dev.off()
 
 #NDVI 03_2019
@@ -120,7 +120,7 @@ B403_2019<-brick("B403_2019.TIF")
 ndvi03_2019<-(B503_2019-B403_2019)/(B503_2019+B403_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi03_2019.jpg", 600, 800)
-plot(ndvi03_2019, col=cl)
+plot(ndvi03_2019, col=cl,main="NDVI 2019 - 03")
 dev.off()
 
 #------------2020-------------------
@@ -158,23 +158,103 @@ dev.off()
 
 #IMG01 2019 -> 2020
 difndviIMG01<-(ndvi01_2020-ndvi01_2019)
-cls <- colorRampPalette(c('white','red','blue'))(100)
+cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG01.jpg", 600, 800)
 plot(difndviIMG01, col=cls)
 dev.off()
 
 #IMG02 2019 -> 2020
 difndviIMG02<-(ndvi02_2020-ndvi02_2019)
-cls <- colorRampPalette(c('white','red','blue'))(100)
+cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG02.jpg", 600, 800)
 plot(difndviIMG02, col=cls)
 dev.off()
 
 #IMG03 2019 -> 2020
 difndviIMG03<-(ndvi03_2020-ndvi03_2019)
-cls <- colorRampPalette(c('white','red','blue'))(100)
+cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG03.jpg", 600, 800)
 plot(difndviIMG03, col=cls)
 dev.off()
 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# UNSUPERVISORED CLASSIFICATION
+
+# ----------------difndviIMG01------------------------------------
+
+set.seed(42)
+ucIMG01<-unsuperClass(difndviIMG01, nClasses=3) 
+jpeg("ucIMG01.jpg", 600, 800)
+plot(ucIMG01$map)
+dev.off()
+
+freq(ucIMG01$map)
+
+# cambiamento positivo --> 8522764
+# nessun cambiamento  --> 22541421
+# cambiamento negativo  --> 9371648
+
+sIMG01<-9371648+22541421+8522764
+percpos01<-8522764/sIMG01 #0.2107726
+percneutro01<-22541421/sIMG01 #0.5574615
+percneg01<-9371648/sIMG01 #0.2317659
+Percent01 <- c(21.07,55.74,23.17)
+Change01 <- c("Positivo","Neutro","Negativo")
+jpeg("graficoIMG01.jpg", 800, 800)
+percentages01 <- data.frame(Change01,Percent01)
+ggplot(percentages01,aes(x=Change01,y=Percent01)) + geom_bar(stat="identity",fill="dark green") + 
+  geom_text(aes(label = Percent01),position=position_dodge(width=0.7), vjust=-0.25, size = 6)
+dev.off()
+
+# --------------------difndviIMG02----------------------------------
+
+set.seed(42)
+ucIMG02<-unsuperClass(difndviIMG02, nClasses=3) 
+jpeg("ucIMG02.jpg", 600, 800)
+plot(ucIMG02$map)
+dev.off()
+
+freq(ucIMG02$map)
+
+# cambiamento positivo --> 12534195
+# nessun cambiamento  --> 22785581
+# cambiamento negativo  --> 5122583
+
+sIMG02<-12534195+22785581+5122583
+percpos02<-12534195/sIMG02 #0.3099274
+percneutro02<-22785581/sIMG02 #0.5634088
+percneg02<-5122583/sIMG02 #0.1266638
+Percent02 <- c(30.99,56.34,12.66)
+Change02 <- c("Positivo","Neutro","Negativo")
+jpeg("graficoIMG02.jpg", 800, 800)
+percentages02 <- data.frame(Change02,Percent02)
+ggplot(percentages02,aes(x=Change02,y=Percent02)) + geom_bar(stat="identity",fill="dark green") + 
+  geom_text(aes(label = Percent02),position=position_dodge(width=0.7), vjust=-0.25, size = 6)
+dev.off()
+
+# --------------------difndviIMG03----------------------------------
+
+set.seed(42)
+ucIMG03<-unsuperClass(difndviIMG03, nClasses=3) 
+jpeg("ucIMG03.jpg", 600, 800)
+plot(ucIMG03$map)
+dev.off()
+
+freq(ucIMG03$map)
+
+# cambiamento positivo --> 8800386
+# nessun cambiamento  --> 25470723
+# cambiamento negativo  --> 6124213
+
+sIMG03<-8800386+25470723+6124213
+percpos03<-8800386/sIMG03 #0.2178566
+percneutro03<-25470723/sIMG03 #0.6305365
+percneg03<-6124213/sIMG03 #0.151607
+Percent03 <- c(21.78,63.05,15.16)
+Change03 <- c("Positivo","Neutro","Negativo")
+jpeg("graficoIMG03.jpg", 800, 800)
+percentages03 <- data.frame(Change03,Percent03)
+ggplot(percentages03,aes(x=Change03,y=Percent03)) + geom_bar(stat="identity",fill="dark green") + 
+  geom_text(aes(label = Percent03),position=position_dodge(width=0.7), vjust=-0.25, size = 6)
+dev.off()
