@@ -22,7 +22,7 @@
 
 # my first code in R for remote sensing
 
-install.packages("raster") #installa il pacchetto "raster"
+install.packages("raster") #installa il pacchetto "raster", utile a lavorare su file in formato raster appunto
 library(raster) #richiama il pacchetto e ci permette di utilizzarlo
 
 setwd("C:/lab/") #carica la working directory (comando per windows), dice al sistema dove acquisire i dati all'interno del PC
@@ -32,7 +32,7 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd") #richiama un'immagine dall'este
 #le "" vengono usate per richiamare qualcosa dall'esterno di R
 
 p224r63_2011 #posso richiamare la variabile per vedere se me l'ha caricata, si aprono gli attributi di dato raster (dimensioni, sorgente, classe, ecc.)
-#mi ha caricato un raster brick  (una serie di bande sovrapposte)
+#mi ha caricato un raster brick -> (una serie di bande sovrapposte)
 
 plot(p224r63_2011) #mi visualizza le immagini di bande di riflettanza
 #vogliamo visualizzare una diversa scala di colore e stabiliamo noi una diversa scala di colori
@@ -73,7 +73,7 @@ plot(p224r63_2011$B1_sre)#plotta l'immagine legata alla banda B1, con la scala d
 
 #plot della B1 con la scala di colori decisa da noi
 cl<-colorRampPalette(c("sky blue","blue","purple","yellow"))(200)
-plot(p224r63_2011, col=cl) #proviamo un'altra scala di colori
+plot(p224r63_2011$B1_sre, col=cl) #proviamo un'altra scala di colori
 dev.off()#chiudiamo l'interfaccia grafica
 
 par(mfrow=c(1,2)) #serve per settare i parametri grafici di un grafico che vogliamo creare
@@ -171,7 +171,7 @@ plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist")
 install.packages("RStoolbox")
 library(raster)
 library(RStoolbox)
-p224r63_2011 <- brick("p224r63_2011_masked.grd") # immagine del 2011, con l'intero blocca di bande tramite la funzione "brick"
+p224r63_2011 <- brick("p224r63_2011_masked.grd") # immagine del 2011, con l'intero blocco di bande tramite la funzione "brick"
 p224r63_2011
 
 #Sequenza multitemporale
