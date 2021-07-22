@@ -101,7 +101,7 @@ B501_2020<-brick("B501_2020.TIF")
 B701_2020<-brick("B701_2020.TIF")
 nbr01_2020<-(B501_2020-B701_2020)/(B501_2020+B701_2020)
 cl <- colorRampPalette(c('black','purple','darkblue','red','orange','yellow','green'))(100)# specifico la palette di colori
-jpeg("nbr01_2020.jpg", 600, 800)
+jpeg("nbr01_2020.jpg", 800, 800)
 plot(nbr01_2020, col=cl, main="NBR 2020 - 01")
 dev.off()
 
@@ -110,7 +110,7 @@ B502_2020<-brick("B502_2020.TIF")
 B702_2020<-brick("B702_2020.TIF")
 nbr02_2020<-(B502_2020-B702_2020)/(B502_2020+B702_2020)
 cl <- colorRampPalette(c('black','purple','darkblue','red','orange','yellow','green'))(100) # specifico la palette di colori
-jpeg("nbr02_2020.jpg", 600, 800)
+jpeg("nbr02_2020.jpg", 800, 800)
 plot(nbr02_2020, col=cl, main="NBR 2020 - 02")
 dev.off()
 
@@ -119,7 +119,7 @@ B503_2020<-brick("B503_2020.TIF")
 B703_2020<-brick("B703_2020.TIF")
 nbr03_2020<-(B503_2020-B703_2020)/(B503_2020+B703_2020)
 cl <- colorRampPalette(c('black','purple','darkblue','red','orange','yellow','green'))(100) # specifico la palette di colori
-jpeg("nbr03_2020.jpg", 600, 800)
+jpeg("nbr03_2020.jpg", 800, 800)
 plot(nbr03_2020, col=cl, main="NBR 2020 - 03")
 dev.off()
 
@@ -152,7 +152,7 @@ B501_2019<-brick("B501_2019.TIF")
 B401_2019<-brick("B401_2019.TIF")
 ndvi01_2019<-(B501_2019-B401_2019)/(B501_2019+B401_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi01_2019.jpg", 600, 800)
+jpeg("ndvi01_2019.jpg", 800, 800)
 plot(ndvi01_2019, col=cl, main="NDVI 2019 - 01")
 dev.off()
 
@@ -161,7 +161,7 @@ B502_2019<-brick("B502_2019.TIF")
 B402_2019<-brick("B402_2019.TIF")
 ndvi02_2019<-(B502_2019-B402_2019)/(B502_2019+B402_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi02_2019.jpg", 600, 800)
+jpeg("ndvi02_2019.jpg", 800, 800)
 plot(ndvi02_2019, col=cl,main="NDVI 2019 - 02")
 dev.off()
 
@@ -170,7 +170,7 @@ B503_2019<-brick("B503_2019.TIF")
 B403_2019<-brick("B403_2019.TIF")
 ndvi03_2019<-(B503_2019-B403_2019)/(B503_2019+B403_2019)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi03_2019.jpg", 600, 800)
+jpeg("ndvi03_2019.jpg", 800, 800)
 plot(ndvi03_2019, col=cl,main="NDVI 2019 - 03")
 dev.off()
 
@@ -181,7 +181,7 @@ B501_2020<-brick("B501_2020.TIF")
 B401_2020<-brick("B401_2020.TIF")
 ndvi01_2020<-(B501_2020-B401_2020)/(B501_2020+B401_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi01_2020.jpg", 600, 800)
+jpeg("ndvi01_2020.jpg", 800, 800)
 plot(ndvi01_2020, col=cl)
 dev.off()
 
@@ -190,7 +190,7 @@ B502_2020<-brick("B502_2020.TIF")
 B402_2020<-brick("B402_2020.TIF")
 ndvi02_2020<-(B502_2020-B402_2020)/(B502_2020+B402_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi02_2020.jpg", 600, 800)
+jpeg("ndvi02_2020.jpg", 800, 800)
 plot(ndvi02_2020, col=cl)
 dev.off()
 
@@ -199,7 +199,7 @@ B503_2020<-brick("B503_2020.TIF")
 B403_2020<-brick("B403_2020.TIF")
 ndvi03_2020<-(B503_2020-B403_2020)/(B503_2020+B403_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi03_2020.jpg", 600, 800)
+jpeg("ndvi03_2020.jpg", 800, 800)
 plot(ndvi03_2020, col=cl)
 dev.off()
 
@@ -210,21 +210,21 @@ dev.off()
 #IMG01 2019 -> 2020
 difndviIMG01<-(ndvi01_2020-ndvi01_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
-jpeg("difndviIMG01.jpg", 600, 800)
+jpeg("difndviIMG01.jpg", 800, 800)
 plot(difndviIMG01, col=cls)
 dev.off()
 
 #IMG02 2019 -> 2020
 difndviIMG02<-(ndvi02_2020-ndvi02_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
-jpeg("difndviIMG02.jpg", 600, 800)
+jpeg("difndviIMG02.jpg", 800, 800)
 plot(difndviIMG02, col=cls)
 dev.off()
 
 #IMG03 2019 -> 2020
 difndviIMG03<-(ndvi03_2020-ndvi03_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
-jpeg("difndviIMG03.jpg", 600, 800)
+jpeg("difndviIMG03.jpg", 800, 800)
 plot(difndviIMG03, col=cls)
 dev.off()
 
@@ -239,7 +239,7 @@ dev.off()
 
 set.seed(42)
 ucIMG01<-unsuperClass(difndviIMG01, nClasses=3) 
-jpeg("ucIMG01.jpg", 600, 800)
+jpeg("ucIMG01.jpg", 800, 800)
 plot(ucIMG01$map)
 dev.off()
 
@@ -265,7 +265,7 @@ dev.off()
 
 set.seed(42)
 ucIMG02<-unsuperClass(difndviIMG02, nClasses=3) 
-jpeg("ucIMG02.jpg", 600, 800)
+jpeg("ucIMG02.jpg", 800, 800)
 plot(ucIMG02$map)
 dev.off()
 
