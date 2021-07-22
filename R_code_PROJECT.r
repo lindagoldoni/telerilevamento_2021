@@ -22,7 +22,7 @@ import01_19<-lapply(list01_19,raster)
 TGr01_19<-stack(import01_19)
 plot(TGr01_19) 
 jpeg("01_2019.jpg", 600, 800)
-plotRGB(TGr01_19,r=4,g=3,b=2,stretch="lin")
+plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin")
 dev.off()
 
 #02_2019
@@ -31,7 +31,7 @@ import02_19<-lapply(list02_19,raster)
 TGr02_19<-stack(import02_19)
 plot(TGr02_19) 
 jpeg("02_2019.jpg", 600, 800)
-plotRGB(TGr02_19,r=4,g=3,b=2,stretch="lin")
+plotRGB(TGr02_19,r=5,g=4,b=3,stretch="lin")
 dev.off()
 
 #03_2019
