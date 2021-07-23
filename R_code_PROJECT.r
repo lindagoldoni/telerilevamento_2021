@@ -16,13 +16,16 @@ setwd("C:/lab/project/australia/all")
 
 #------------2019-------------------
 
+# In questo step sono state raccolte tutte le bande in una lista, da cui è stato ricavato il file raster, unite in un unico file infine plottate in RGB
+# il procedimento è stato ripetuto per ciascuna delle tre sezioni per ognuno dei due anni
+
 #01_2019
-list01_19<-list.files(pattern="01_2019.TIF") 
-import01_19<-lapply(list01_19,raster)
-TGr01_19<-stack(import01_19)
+list01_19<-list.files(pattern="01_2019.TIF")   #il "pattern" è il nome che identifica un gruppo di immagini salvate
+import01_19<-lapply(list01_19,raster)  # applico la funzione raster
+TGr01_19<-stack(import01_19)   # tramite la funzione "stack" unisco le componenti della lista in un unico file
 plot(TGr01_19) 
-jpeg("01_2019.jpg", 600, 800)
-plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin")
+jpeg("01_2019.jpg", 600, 800)  # con tale funzione possiamo salvare l'immagine in formato .jpg
+plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin") # faccio il plot in RGB mettendo nel rosso la banda infrarossa, nel verde la banda rossa e nel blu la banda verde
 dev.off()
 
 #02_2019
@@ -97,12 +100,12 @@ dev.off()
 #In questo modo le aree bruciate sono individuate da indici NBR negativi
 
 #NBR 01_2020
-B501_2020<-brick("B501_2020.TIF")
-B701_2020<-brick("B701_2020.TIF")
-nbr01_2020<-(B501_2020-B701_2020)/(B501_2020+B701_2020)
-cl <- colorRampPalette(c('black','purple','darkblue','red','orange','yellow','green'))(100)# specifico la palette di colori
+B501_2020<-brick("B501_2020.TIF") # richiamo il file .tif e lo salvo in una variabile che identifica la banda dell'infrarosso
+B701_2020<-brick("B701_2020.TIF") # la banda 7 corrisponde all'infrarosso a onde corte
+nbr01_2020<-(B501_2020-B701_2020)/(B501_2020+B701_2020) # si esegue il calcolo per ricavare il valore di NBR
+cl <- colorRampPalette(c('black','purple','darkblue','red','orange','yellow','green'))(100)# specifico la palette di colori desiderata
 jpeg("nbr01_2020.jpg", 800, 800)
-plot(nbr01_2020, col=cl, main="NBR 2020 - 01")
+plot(nbr01_2020, col=cl, main="NBR 2020 - 01") # si plotta il tutto
 dev.off()
 
 #NBR 02_2020
@@ -307,15 +310,15 @@ dev.off()
 
 freq(ucIMG03$map)
 
-# 3 cambiamento positivo --> 8800386
+# 3 cambiamento positivo -->6124213 
 # 1 nessun cambiamento  --> 25470723
-# 2 cambiamento negativo  --> 6124213
+# 2 cambiamento negativo  -->  8800386
 
 sIMG03<-8800386+25470723+6124213
-percpos03<-8800386/sIMG03 #0.2178566
+percpos03<-6124213/sIMG03 #0.151607
 percneutro03<-25470723/sIMG03 #0.6305365
-percneg03<-6124213/sIMG03 #0.151607
-Percent03 <- c(21.78,63.05,15.16)
+percneg03<-8800386/sIMG03 #0.2178566
+Percent03 <- c(15.16,63.05,21.78)
 Change03 <- c("Positivo","Neutro","Negativo")
 jpeg("graficoIMG03.jpg", 800, 800)
 percentages03 <- data.frame(Change03,Percent03)
@@ -347,8 +350,8 @@ forest2<-c(7658,8155,8076,15144)
 
 spectrals<-data.frame(band,forest1,forest2)
 jpeg("firma01_20.jpg")
-ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
-       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+ggplot(spectrals,aes(x=band))+ 
+       geom_line(aes(y=forest1),color="red")+ 
        geom_line(aes(y=forest2),color="blue")+
        labs(x="Banda",y="Risposta")
 dev.off()
@@ -369,8 +372,8 @@ forest2<-c(7687,8219,8129,15943)
 
 spectrals<-data.frame(band,forest1,forest2)
 jpeg("firma01_19.jpg")
-ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
-       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+ggplot(spectrals,aes(x=band))+ 
+       geom_line(aes(y=forest1),color="red")+
        geom_line(aes(y=forest2),color="blue")+
        labs(x="Banda",y="Risposta")
 dev.off()
