@@ -182,7 +182,7 @@ B401_2020<-brick("B401_2020.TIF")
 ndvi01_2020<-(B501_2020-B401_2020)/(B501_2020+B401_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi01_2020.jpg", 800, 800)
-plot(ndvi01_2020, col=cl)
+plot(ndvi01_2020, col=cl,main="NDVI 2020 - 01")
 dev.off()
 
 #NDVI 02_2020
@@ -191,7 +191,7 @@ B402_2020<-brick("B402_2020.TIF")
 ndvi02_2020<-(B502_2020-B402_2020)/(B502_2020+B402_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi02_2020.jpg", 800, 800)
-plot(ndvi02_2020, col=cl)
+plot(ndvi02_2020, col=cl,main="NDVI 2020 - 02")
 dev.off()
 
 #NDVI 03_2020
@@ -200,7 +200,17 @@ B403_2020<-brick("B403_2020.TIF")
 ndvi03_2020<-(B503_2020-B403_2020)/(B503_2020+B403_2020)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
 jpeg("ndvi03_2020.jpg", 800, 800)
-plot(ndvi03_2020, col=cl)
+plot(ndvi03_2020, col=cl,main="NDVI 2020 - 03")
+dev.off()
+
+jpeg("NDVITOT.jpg", 1000, 800)
+par(mfrow=c(2,3))
+plot(ndvi01_2019, col=cl, main="NDVI 2019 - 01")
+plot(ndvi02_2019, col=cl,main="NDVI 2019 - 02")
+plot(ndvi03_2019, col=cl,main="NDVI 2019 - 03")
+plot(ndvi01_2020, col=cl,main="NDVI 2020 - 01")
+plot(ndvi02_2020, col=cl,main="NDVI 2020 - 02")
+plot(ndvi03_2020, col=cl,main="NDVI 2020 - 03")
 dev.off()
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -211,21 +221,21 @@ dev.off()
 difndviIMG01<-(ndvi01_2020-ndvi01_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG01.jpg", 800, 800)
-plot(difndviIMG01, col=cls)
+plot(difndviIMG01, col=cls, main="DIFFERENZA NDVI 2019-2020 - 01")
 dev.off()
 
 #IMG02 2019 -> 2020
 difndviIMG02<-(ndvi02_2020-ndvi02_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG02.jpg", 800, 800)
-plot(difndviIMG02, col=cls)
+plot(difndviIMG02, col=cls, main="DIFFERENZA NDVI 2019-2020 - 02")
 dev.off()
 
 #IMG03 2019 -> 2020
 difndviIMG03<-(ndvi03_2020-ndvi03_2019)
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG03.jpg", 800, 800)
-plot(difndviIMG03, col=cls)
+plot(difndviIMG03, col=cls, main="DIFFERENZA NDVI 2019-2020 - 03")
 dev.off()
 
 
@@ -245,16 +255,16 @@ dev.off()
 
 freq(ucIMG01$map)
 
-# cambiamento positivo --> 8522764
-# nessun cambiamento  --> 22541421
-# cambiamento negativo  --> 9371648
+# 3 cambiamento positivo --> 8317900
+# 1 nessun cambiamento  --> 22170001
+# 2 cambiamento negativo  --> 9947932
 
-sIMG01<-9371648+22541421+8522764
-percpos01<-8522764/sIMG01 #0.2107726
-percneutro01<-22541421/sIMG01 #0.5574615
-percneg01<-9371648/sIMG01 #0.2317659
-Percent01 <- c(21.07,55.74,23.17)
-Change01 <- c("Positivo","Neutro","Negativo")
+sIMG01<-8317900+22170001+9947932
+percpos01<-8317900/sIMG01 #0.2057062
+percneutro01<-22170001/sIMG01 #0.5482761
+percneg01<-9947932/sIMG01 #0.2460177
+Percent01 <- c(20.57,54.82,24.60)
+Change01 <- c("Positivo","Nullo","Negativo")
 jpeg("graficoIMG01.jpg", 800, 800)
 percentages01 <- data.frame(Change01,Percent01)
 ggplot(percentages01,aes(x=Change01,y=Percent01)) + geom_bar(stat="identity",fill="dark green") + 
@@ -271,9 +281,9 @@ dev.off()
 
 freq(ucIMG02$map)
 
-# cambiamento positivo --> 12534195
-# nessun cambiamento  --> 22785581
-# cambiamento negativo  --> 5122583
+# 3 cambiamento positivo --> 12534195
+# 1 nessun cambiamento  --> 22785581
+# 2 cambiamento negativo  --> 5122583
 
 sIMG02<-12534195+22785581+5122583
 percpos02<-12534195/sIMG02 #0.3099274
@@ -291,15 +301,15 @@ dev.off()
 
 set.seed(42)
 ucIMG03<-unsuperClass(difndviIMG03, nClasses=3) 
-jpeg("ucIMG03.jpg", 600, 800)
+jpeg("ucIMG03.jpg", 800, 800)
 plot(ucIMG03$map)
 dev.off()
 
 freq(ucIMG03$map)
 
-# cambiamento positivo --> 8800386
-# nessun cambiamento  --> 25470723
-# cambiamento negativo  --> 6124213
+# 3 cambiamento positivo --> 8800386
+# 1 nessun cambiamento  --> 25470723
+# 2 cambiamento negativo  --> 6124213
 
 sIMG03<-8800386+25470723+6124213
 percpos03<-8800386/sIMG03 #0.2178566
@@ -317,64 +327,139 @@ dev.off()
 
 # FIRMA SPETTRALE
 
-#01_2020
+#è stata effettuata la firma spettrale su due porzioni di area boschiva in ciascuna immagine per determinare se gli incendi abbiano provocato un cambiamento da parte della vegetazione
+#per ogni immagine sono stati presi due punti: uno su una porzione bruciata e uno su una porzione che è rimasta illesa dal fuoco
+
+#--------------01_2020----------------------------
+plotRGB(TGr01_20,r=5,g=4,b=3,stretch="lin")
 click(TGr01_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
-#  B501_2020 B601_2020 B701_2020
-#1     14784     14441     11761  f
-#2     11306      8931      7924  f 
-#3     14667     13425     10905  f
-#4     20688     15806     11862  p
-#5     24617     14559     10565  p
-#6     16352     11284      9279  p
 
-band<-c(1,2,3)
-forest1<-c(14784,14441,11761)
-forest2<-c(11306,8931,7924)
-forest3<-c(14667,13425,10905)
-prateria1<-c(20688,15806,11862)
-prateria2<-c(24617,14559,10565)
-prateria3<-c(16352,11284,9279)
 
-spectrals<-data.frame(band,forest1,forest2,forest3,prateria1,prateria2,prateria3)
+#       x        y     cell  B201_2020 B301_2020 B401_2020  B501_2020    
+#1 242070 -3684270 31775739     7799      8065      8438      10463  foresta bruciata
+#2 267180 -3738600 45578207     7658      8155      8076      15144   foresta sana
+     
+
+band<-c(2,3,4,5)
+forest1<-c(7799,8065,8438,10463)
+forest2<-c(7658,8155,8076,15144)
+
+
+spectrals<-data.frame(band,forest1,forest2)
 jpeg("firma01_20.jpg")
 ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
-       geom_line(aes(y=forest1),color="green")+ #inserisce le geometrie delle linee di interesse
-       geom_line(aes(y=forest2),color="green")+
-       geom_line(aes(y=forest3),color="green")+
-       geom_line(aes(y=prateria1),color="blue")+
-       geom_line(aes(y=prateria2),color="blue")+
-       geom_line(aes(y=prateria3),color="blue")+
-       labs(x="band",y="reflectance")
+       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
 dev.off()
 
 
-#01_2019
+#---------------------01_2019---------------------------------
+plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin")
 click(TGr01_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
-#  B501_2019 B601_2019 B701_2019
-#1     15378     11736      9374  f
-#2      9175      7975      7505  f
-#3     14994     12547      9780  f
-#4     21558     17213     12506  p
-#5     24217     14146     10466  p
-#6     17452     13270     10209  p
 
-band<-c(1,2,3)
-forest1<-c(15378,11736,9374)
-forest2<-c(9175,7975,7505)
-forest3<-c(14994,12547,9780)
-prateria1<-c(21558,17213,12506)
-prateria2<-c(24217,14146,10466)
-prateria3<-c(17452,13270,10209)
+#       x        y     cell  B201_2019 B301_2019 B401_2019  B501_2019   
+#1 242880 -3683610 31608174     7628      8010      8036      14085 
+#2 265530 -3741300 46264112     7687      8219      8129      15943 
 
-spectrals<-data.frame(band,forest1,forest2,forest3,prateria1,prateria2,prateria3)
+
+band<-c(2,3,4,5)
+forest1<-c(7628,8010,8036,14085)
+forest2<-c(7687,8219,8129,15943)
+
+spectrals<-data.frame(band,forest1,forest2)
 jpeg("firma01_19.jpg")
 ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
-       geom_line(aes(y=forest1),color="green")+ #inserisce le geometrie delle linee di interesse
-       geom_line(aes(y=forest2),color="green")+
-       geom_line(aes(y=forest3),color="green")+
-       geom_line(aes(y=prateria1),color="blue")+
-       geom_line(aes(y=prateria2),color="blue")+
-       geom_line(aes(y=prateria3),color="blue")+
-       labs(x="band",y="reflectance")
+       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
 dev.off()
+
+#--------------02_2020----------------------------
+plotRGB(TGr02_20,r=5,g=4,b=3,stretch="lin")
+click(TGr02_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
+
+#       x        y     cell  B202_2020 B302_2020 B402_2020  B502_2020       
+#1 797070 -3877290 42906523       9601     10278     10847    12981 foresta bruciata
+#2 858840 -3797220 21794123       7674      8260      8251    16540 foresta sana
+
+band<-c(2,3,4,5)
+forest1<-c(9601,10278,10847,12981)
+forest2<-c(7674,8260,8251,16540)
+
+
+spectrals<-data.frame(band,forest1,forest2)
+jpeg("firma02_20.jpg")
+ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
+       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
+dev.off()
+
+#---------------------02_2019---------------------------------
+plotRGB(TGr02_19,r=5,g=4,b=3,stretch="lin")
+click(TGr02_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
+
+#       x        y     cell  B202_2019 B302_2019 B402_2019 B502_2019    
+#1 796950 -3877290 42852359     7826      8324      8332     13923
+#2 859560 -3798930 22217034     7706      8161      8054     14773
+     
+band<-c(2,3,4,5)
+forest1<-c(7826,8324,8332,13923)
+forest2<-c(7706,8161,8054,14773)
+
+spectrals<-data.frame(band,forest1,forest2)
+jpeg("firma02_19.jpg")
+ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
+       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
+dev.off()
+
+#--------------03_2020----------------------------
+plotRGB(TGr03_20,r=5,g=4,b=3,stretch="lin")
+click(TGr03_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
+
+#       x        y     cell B203_2020 B303_2020 B403_2020  B503_2020 
+#1 758610 -4015620 37693272    8405      9091      9247     10938    
+#2 719880 -4058160 48909779    7820      8831      8817     17737 
+
+ 
+   
+band<-c(2,3,4,5)
+forest1<-c(8405,9091,9247,10938)
+forest2<-c(7820,8831,8817,17737)
+
+
+spectrals<-data.frame(band,forest1,forest2)
+jpeg("firma03_20.jpg")
+ggplot(spectrals,aes(x=band))+ #nel grafico in x ci va la banda e in y in una mettiamo l'acqua e in una la foresta
+       geom_line(aes(y=forest1),color="red")+ #inserisce le geometrie delle linee di interesse
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
+dev.off()
+
+#--------------03_2019----------------------------
+plotRGB(TGr03_19,r=5,g=4,b=3,stretch="lin")
+click(TGr03_19, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
+
+#       x        y     cell  B203_2019 B303_2019 B403_2019  B503_2019
+#1 760650 -4016340 37914404       7583      8048      7850    15633
+#2 718050 -4058520 49021790       7621      8029      7887    16239   
+
+   
+band<-c(2,3,4,5)
+forest1<-c(7583,8048,7850,15633)
+forest2<-c(7621,8029,7887,16239)
+
+
+spectrals<-data.frame(band,forest1,forest2)
+jpeg("firma03_19.jpg")
+ggplot(spectrals,aes(x=band))+ 
+       geom_line(aes(y=forest1),color="red")+ 
+       geom_line(aes(y=forest2),color="blue")+
+       labs(x="Banda",y="Risposta")
+       
+dev.off()
+
 
