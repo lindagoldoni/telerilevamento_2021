@@ -137,6 +137,7 @@ dev.off()
 
 #NDVI: normalizza il DVI, fa la standardizzazione del DVI sulla somma tra NIR e RED, in modo da ottenere numeri bassi e si possono confrontare immagini con risoluzione radiometrica differente
 #il range dell'NDVI è [-1 , 1]
+#in questo modo è possibile riconoscere la presenza di vegetazione sana e quella non sana
 
 #Band 1 - Coastal / Aerosol
 #Band 2 - Blue
@@ -148,15 +149,16 @@ dev.off()
 #Band 8 - Panchromatic
 #Band 9 - Cirrus
 
+#il procedimento è stato ripetuto per ciascuna sezione di ogni anno
 #------------2019-------------------
 
 #NDVI 01_2019
-B501_2019<-brick("B501_2019.TIF")
+B501_2019<-brick("B501_2019.TIF") #si caricano i file .tif con la funzione brick
 B401_2019<-brick("B401_2019.TIF")
-ndvi01_2019<-(B501_2019-B401_2019)/(B501_2019+B401_2019)
+ndvi01_2019<-(B501_2019-B401_2019)/(B501_2019+B401_2019) #facciamo l'operazione per ricavare l'NDVI
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifico la palette di colori
-jpeg("ndvi01_2019.jpg", 800, 800)
-plot(ndvi01_2019, col=cl, main="NDVI 2019 - 01")
+jpeg("ndvi01_2019.jpg", 800, 800) #estraiamo l'immagine con la funzione jpeg
+plot(ndvi01_2019, col=cl, main="NDVI 2019 - 01") #plottiamo l'NDVI usando il nome della variabile a cui lo abbiamo assegnato
 dev.off()
 
 #NDVI 02_2019
@@ -220,8 +222,13 @@ dev.off()
 
 # DIFFERENZA NDVI
 
+#è stata effettuata la differenza tra gli NDVI del 2020 e quelli del 2019 per valutare se ci sia stato un aumento dell'indice o una diminuzione a causa degli incendi
+#per ciascuna sezione è stato fatta la differenza tra 2020 e 2019
+
+#il procedimento è stato ripetuto 3 volte per le 3 sezioni
+
 #IMG01 2019 -> 2020
-difndviIMG01<-(ndvi01_2020-ndvi01_2019)
+difndviIMG01<-(ndvi01_2020-ndvi01_2019) #operazione di sottrazione tra NDVI 2020 e NDVI 2019
 cls <- colorRampPalette(c('pink','red','white','blue'))(100)
 jpeg("difndviIMG01.jpg", 800, 800)
 plot(difndviIMG01, col=cls, main="DIFFERENZA NDVI 2019-2020 - 01")
@@ -247,16 +254,19 @@ dev.off()
 # UNSUPERVISORED CLASSIFICATION
 
 #in questo modo siamo in grado di capire qual'è la percentuale di territorio che ha subito incendi, quella rivegetata e quella che nel caso non ha subito cambiamenti.
+# utilizzando la unsupervisored classification l'unico compito dell'operatore è quello di specificare il numero di classi da individuare, in questo caso specifico sono 3
+
+#il procedimento è stato ripetuto per ogni differenza di NDVI riferita a ciascuna sezione
 
 # ----------------difndviIMG01------------------------------------
 
 set.seed(42)
-ucIMG01<-unsuperClass(difndviIMG01, nClasses=3) 
+ucIMG01<-unsuperClass(difndviIMG01, nClasses=3) # specifichiamo su cosa vogliamo fare la classificazione e quanti classi vogliamo estrapolare
 jpeg("ucIMG01.jpg", 800, 800)
-plot(ucIMG01$map)
+plot(ucIMG01$map) # quando si fa la classificazione si generano diversi output, noi siamo interessati a plottare solo la mappa e la richiamiamo con il simbolo $
 dev.off()
 
-freq(ucIMG01$map)
+freq(ucIMG01$map) # sulla mappa calcoliamo la frequenza per ogni classe e tramite esse possiamo poi fare la percentuale sul totale
 
 # 3 cambiamento positivo --> 8317900
 # 1 nessun cambiamento  --> 22170001
@@ -266,11 +276,11 @@ sIMG01<-8317900+22170001+9947932
 percpos01<-8317900/sIMG01 #0.2057062
 percneutro01<-22170001/sIMG01 #0.5482761
 percneg01<-9947932/sIMG01 #0.2460177
-Percent01 <- c(20.57,54.82,24.60)
-Change01 <- c("Positivo","Nullo","Negativo")
+Percent01 <- c(20.57,54.82,24.60) #inseriamo i valori percentuali in y
+Change01 <- c("Positivo","Nullo","Negativo") #inseriamo le etichette in x
 jpeg("graficoIMG01.jpg", 800, 800)
 percentages01 <- data.frame(Change01,Percent01)
-ggplot(percentages01,aes(x=Change01,y=Percent01)) + geom_bar(stat="identity",fill="dark green") + 
+ggplot(percentages01,aes(x=Change01,y=Percent01)) + geom_bar(stat="identity",fill="dark green") + #creiamo il grafico a istogramma con le etichette delle percentuali in alto
   geom_text(aes(label = Percent01),position=position_dodge(width=0.7), vjust=-0.25, size = 6)
 dev.off()
 
@@ -330,32 +340,34 @@ dev.off()
 
 # FIRMA SPETTRALE
 
+# La firma spettrale è la riflettanza in funzione della lunghezza d'onda e ogni materiale è caratterizzato da una risposta univoca.
 #è stata effettuata la firma spettrale su due porzioni di area boschiva in ciascuna immagine per determinare se gli incendi abbiano provocato un cambiamento da parte della vegetazione
 #per ogni immagine sono stati presi due punti: uno su una porzione bruciata e uno su una porzione che è rimasta illesa dal fuoco
 
 #--------------01_2020----------------------------
-plotRGB(TGr01_20,r=5,g=4,b=3,stretch="lin")
-click(TGr01_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") 
+plotRGB(TGr01_20,r=5,g=4,b=3,stretch="lin") #prima di tutto si protta l'immagine in RGB
+click(TGr01_20, id=T, xy=T, cell=T, type="p", pch=16, cex=4, col="yellow") # con la funzione "click" si selezionano i punti sull'immagine di cui ricaverà il valore di isposta spettrale per ogni banda
 
-
+# questi sono i valori di risposta per le bande interessate 
 #       x        y     cell  B201_2020 B301_2020 B401_2020  B501_2020    
 #1 242070 -3684270 31775739     7799      8065      8438      10463  foresta bruciata
 #2 267180 -3738600 45578207     7658      8155      8076      15144   foresta sana
      
 
-band<-c(2,3,4,5)
+band<-c(2,3,4,5) # inseriamo i valori in un vettore e li salviamo in una variabile
 forest1<-c(7799,8065,8438,10463)
 forest2<-c(7658,8155,8076,15144)
 
 
-spectrals<-data.frame(band,forest1,forest2)
+spectrals<-data.frame(band,forest1,forest2) #facciamo una tabella con i valori ricavati
 jpeg("firma01_20.jpg")
-ggplot(spectrals,aes(x=band))+ 
+ggplot(spectrals,aes(x=band))+ #plottiamo tutto in un grafico in cui gli spettri cono identificati da due linee di diverso colore
        geom_line(aes(y=forest1),color="red")+ 
        geom_line(aes(y=forest2),color="blue")+
        labs(x="Banda",y="Risposta")
 dev.off()
 
+#per fare una valutazione corretta è necessario che i punti, presi nei due anni per la stessa sezione, siano gli stessi
 
 #---------------------01_2019---------------------------------
 plotRGB(TGr01_19,r=5,g=4,b=3,stretch="lin")
