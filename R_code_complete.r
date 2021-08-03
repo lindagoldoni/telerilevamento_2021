@@ -171,7 +171,7 @@ plotRGB(p224r63_2011, r=3,g=4,b=2, stretch="hist")
 install.packages("RStoolbox")
 library(raster)
 library(RStoolbox)
-p224r63_2011 <- brick("p224r63_2011_masked.grd") # immagine del 2011, con l'intero blocco di bande tramite la funzione "brick"
+p224r63_2011 <- brick("p224r63_2011_masked.grd") # carichiamo l'immagine del 2011, con l'intero blocco di bande tramite la funzione "brick"
 p224r63_2011
 
 #Sequenza multitemporale
@@ -243,14 +243,14 @@ plot(lst_2010)
 plot(lst_2015)
 
 # inserire le immagini una per una diventa un procedimento lento perciò si utilizza una funzione per plottare tutte le immagini insieme "lapply"
-#"laplly"   : #applico una certa funzione ad una lista di raster che sono selezionate per caratteristica
+#"lapply"   : #applico una certa funzione ad una lista di raster che sono selezionate per caratteristica
 # si fa una lista di file "lst" e su questa viene applicata la funzione raster con "lapply"
 
 #prima di tutto faccio una lista: crea la lista di file che R usa per applicare la funzione "lapply"
 #LIST OF FILES
 
 rlist<-list.files(pattern="lst") #pattern: spiega al software i file che ci interessano attraverso il loro nome che devono contenere un oggetto in comune (i file utilizzati hanno in comune "lst_" nel nome)
-import<-lapply(rlist,raster) # apllichiamo la funzione raster alla lista appena creata con la funzione "lapply", lapply(x, fun), in questo modo importiamo le immagini 
+import<-lapply(rlist,raster) # applichiamo la funzione raster alla lista appena creata con la funzione "lapply", lapply(x, fun), in questo modo importiamo le immagini 
 # abbiamo preso i singoli file, abbiamo fatto la lista, l'abbiamo importata in R, possiamo compattarli in un unico file, raggruppandoli dandogli un nome attraverso una funzione
 #"stack": da una lista di file singoli genera un singolo file con all'interno i precedenti raggruppati (fa parte del pacchetto raster)
 TGr<-stack(import) # genero un unico file, in questo modo posso plottare il singolo file
@@ -285,7 +285,7 @@ levelplot(TGr)
 # con il "par" questa funzione diventa più difficile da gestire, ma si può fare direttamente sulle singole immagini
 levelplot(TGr$lst_2000) # in questo modo selezioniamo solo un'immagine per cui fare il "levelplot" e si visualizza solo una singola mappa
 # il file visualizzato è un singolo strato in cui i valori sono registrati in bit (questa è un'immagine a 16 bit) che indicano i valori di temperatura
-# di una colonna di sommano tutti i valori e si dividono per il numero di valori, si ottiene così una media che può essere plottata su un grafico sopra la mappa
+# di una colonna si sommano tutti i valori e si dividono per il numero di valori, si ottiene così una media che può essere plottata su un grafico sopra la mappa
 # sulla parte ghiacciata della Groenlandia ci aspettiamo dei valori di LST bassi e quindi una media bassa, che viene plottata a sua volta sul grafico, in questo modo per tutte le altre colonne
 # in corrispondenza del bianco abbiamo dei "non valori"
 
@@ -380,7 +380,7 @@ stitch("C:/lab/greenland/R_code_greenland.r.txt" , template=system.file("misc", 
 
 
 # con software di testo possiamo compilare i file latex
-# il fil etex generato con R che non riusciamo a leggere lo andiamo a leggere con OverLeaf generando il Latex
+# il file tex generato con R che non riusciamo a leggere lo andiamo a leggere con OverLeaf generando il Latex
 
 #-------------------------------------------------------------------------
 
@@ -398,7 +398,7 @@ setwd("C:/lab/") #settiamo la working directory
 p224r63_2011<-brick("p224r63_2011_masked.grd") # salviamo l'immagine in una variabile e l'apriamo con la funzione "brick"
 plot(p224r63_2011) # vedremo diverse immagini plottate alle varie bande
 p224r63_2011 # leggiamo le informazioni dell'immagine
-plot(p224r63_2011$B1_sre,p224r63_2011$B2_sre, col="red", pch=19, cex=2) # plottiamo le bande 1 e la banda 2 della nostra immagine escludendo tutte le altre, "pch" serve ad indicare il simbolo che vogliamo plottare, "cex" aumenta la dimensione dei puntoi
+plot(p224r63_2011$B1_sre,p224r63_2011$B2_sre, col="red", pch=19, cex=2) # plottiamo le bande 1 e la banda 2 della nostra immagine escludendo tutte le altre, "pch" serve ad indicare il simbolo che vogliamo plottare, "cex" aumenta la dimensione dei punti
 
 # compare un "warnings" dicendo che: ha plottato il 2% dei pixel che in realtà formavano il raster
 # vediamo però informazioni molto correlate tra loro, infatti la banda 1 e 2 solitamente sono fra loro molto correlate: l'informazione di un punto su una banda è molto simile all'informazione del punto sull'altra banda
