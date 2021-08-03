@@ -452,6 +452,8 @@ plot(p224r63_2011res_pca$map) # ci aspettiamo di vedere tanta variabilità nella
 # nella prima componente riusciamo a distinguere bene tutte le variazioni spaziali, nella componente 7 diventa molto difficile distinguere le forme, la prima componente è quella che spiega più variabilità
 plotRGB(p224r63_2011res_pca$map, r=1,g=2,b=3, stretch="lin")
 # i colori sono legati alle tre componenti, risulta quindi un'analisi delle componenti principali, questa è la PCA dell'immagine originale
+# Lo scopo della tecnica è quello di ridurre il numero più o meno elevato di variabili che descrivono un insieme di dati a un numero minore di variabili latenti, limitando il più possibile la perdita di informazioni
+
 # data cube: immagine iperspettrale con numerose bande che possono essere compattate attraverso la PCA
 
 str(p224r63_2011res_pca) # ci mostra la struttura del file
@@ -472,12 +474,12 @@ str(p224r63_2011res_pca) # ci mostra la struttura del file
 library(raster) #carichiamo il pacchetto che ci permette di utilizzare la funzione "brick"
 library(RStoolbox) #dovremo utilizzare delle funzioni di questo pacchetto
 setwd("C:/lab/solar_orbiter/") # settiamo la cartella "solar_orbiter" come working directory
-so<-brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg") #carichiamo dentro ad R la nostra immagine e la salviamo in una variabile, la funzione brick permettedi recuperare un immagine esterna ad R con tutto il pacchetto RGB dei dati, la funzione si trova nel pacchetto "raster"
+so<-brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg") #carichiamo dentro ad R la nostra immagine e la salviamo in una variabile, la funzione brick permette di recuperare un immagine esterna ad R con tutto il pacchetto RGB dei dati, la funzione si trova nel pacchetto "raster"
 #l'immagine rappresenta con immagine ultravioletti diverse situazioni energetiche del sole (esplosioni, ecc)
 so # richiamiamo l'immagine per visualizzare i suoi attributi
 
 #visualizziamo il plot in RGB
-plotRGB(so,1,2,3,stretch="lin") # in questo modo vediamo l'immagine con i colori originali, dove le esplosion sono più forti l'immagine è più luminosa
+plotRGB(so,1,2,3,stretch="lin") # in questo modo vediamo l'immagine con i colori originali, dove le esplosioni sono più forti l'immagine è più luminosa
 #dobbiamo classificare l'immagine per determinare le diverse classi energetiche
 # nella nostra immagine montata in RGB, ogni pixel ha un determinato valore nelle rispettive bande e interpolando su uno spazio 3D ricaviamo la posizione del pixel
 #il valore del colore nelle rispettive bande dipende dalla riflettanza di ciascuna banda
@@ -495,7 +497,7 @@ set.seed(42)
 soc<-unsuperClass(so, nClasses=3) # mettiamo solo nome dell'immagine e il numero di classi che vogliamo creare e la salviamo in una variabile, siamo partiti da punti random
 #plottiamo ora l'immagine risultato
 #unsuperlClass<- ha creato il modello e la mappa in uscita, quando plottiamo l'immagine ha diverse parti, NOI DOBBIAMO PLOTTARE LA MAPPA
-plot(soc$map) # del file soc prendiamo solo la mpa con il simbolo $
+plot(soc$map) # del file soc prendiamo solo la mappa con il simbolo $
 # abbiamo il software che divide le 3 classi e le associa a piacere 
 #può essere che le mappe tra i colleghi siano diverse perché ognuno di noi ha selezionato un "training set" diverso
 # si può soluzionare con la funzione "set.seed" prima della funzione
@@ -522,7 +524,7 @@ plot(sunc$map)
 #GRAND CANYON
 # https://landsat.visibleearth.nasa.gov/view.php?id=80948
 
-#le nuvole possono essere tolte con funzioni creando un file "masked" oppure uyilizziamo un altro tipo di sensore
+#le nuvole possono essere tolte con funzioni creando un file "masked" oppure utilizziamo un altro tipo di sensore
 #le immagini ad ora utilizzate sono state acquisite con sensori passivi
 # la mineralogia delle rocce determina vari valori di riflettanza di una certa zona
 # utilizziamo un'immagine landsat con colori del visibile
@@ -552,8 +554,8 @@ plot(canyonc4$map)
 # con le 4 classificazioni ovviamente vediamo maggiore dettaglio, per appurare le classificazioni bisognerebbe andare  a terra e verificare come mai ci sono differenze nella riflettanza
 
 # analisi multivariata: vogliamo compattare le informazioni tra loro correlate, misura la varianza tra la riflettanza su due bande
-# dobbiamo compattare un sistema a due bande: partendo dall'origine si traccia un asse e lo chiamiamo "Componente principale 1" PC! e il secondo asse lo facciamo passare perpendicolare al primo e lo chiamiamo PC2
-# il sistema ha sempre due bande  MA LA VARIABILITA E DI CIRCA IL 90% PER PC1 E 10 % PC2: invece di usare tutti e due gli assi ne uso solo uno (PC1 ad esempia che interessa già il 90%)
+# dobbiamo compattare un sistema a due bande: partendo dall'origine si traccia un asse e lo chiamiamo "Componente principale 1" PC1 e il secondo asse lo facciamo passare perpendicolare al primo e lo chiamiamo PC2
+# il sistema ha sempre due bande  MA LA VARIABILITA E DI CIRCA IL 90% PER PC1 E 10 % PC2: invece di usare tutti e due gli assi ne uso solo uno (PC1 ad esempio che interessa già il 90%)
 # la componente principale è quella meglio visualizzata e le altre rappresentano il rumore
 
 #-------------------------------------------------------------------------
@@ -562,15 +564,15 @@ plot(canyonc4$map)
 
 library(raster)
 library(RStoolbox)
-library(ggplot2)
+library(ggplot2) # pacchetto necessario al fine di costruire grafici
 library(gridExtra)
-setwd("~/lab/")
-p224r63 <- brick("p224r63_2011_masked.grd")
-ggRGB(p224r63,3,2,1, stretch="lin")
+setwd("C:/lab")
+p224r63 <- brick("p224r63_2011_masked.grd") # richiamiamo l'immagine con la fuzione brick
+ggRGB(p224r63,3,2,1, stretch="lin") 
 ggRGB(p224r63,4,3,2, stretch="lin")
 p1 <- ggRGB(p224r63,3,2,1, stretch="lin")
 p2 <- ggRGB(p224r63,4,3,2, stretch="lin")
-grid.arrange(p1, p2, nrow = 2) # this needs gridExtra
+grid.arrange(p1, p2, nrow = 2) # in questo modo costruiamo dei grafici con la griglia
 
 #-------------------------------------------------------------------------
 
@@ -582,7 +584,7 @@ library(raster)
 
 setwd("C:/lab/deforest/")
 
-defor1<-brick("defor1.jpg")
+defor1<-brick("defor1.jpg") # richiamiamo tutti i livelli dell'immagine con la funzione brick
 defor2<-brick("defor2.jpg")
 
 # B1=NIR, B2=red, B3=green
@@ -600,7 +602,7 @@ plotRGB(defor2,r=1,g=2,b=3,stretch="lin")
 #il pixel di vegetazione sana ha il massimo di riflettanza nel NIR e il minimo di riflettanza nel RED perché viene assorbita (solitamente è vicino a 0)
 # possiamo normalizzarlo generando NDVI e si fa NIR-RED/NIR+RED
 
-# rpima di tutto richiamiamo i pacchetti e settiamo la working directory
+# prima di tutto richiamiamo i pacchetti e settiamo la working directory
 # carichiamo le immagini con "brick"
 # successivamente plottiamo le immagini con il plotRGB
 
@@ -619,7 +621,7 @@ plot(dvi2, col=cl, main="DVI at time 2") # la parte gialla è suolo nudo e il ro
 par(mfrow=c(2,1))
 plot(dvi1, col=cl, main="DVI at time 1")
 plot(dvi2, col=cl, main="DVI at time 2")
-# le mettiamo in un'unica finetsra per confrontarle e successivamente facciamo il calcolo
+# le mettiamo in un'unica finestra per confrontarle e successivamente facciamo il calcolo
 
 difdvi<- dvi1-dvi2 # facciamo la differenza tra le due mappe e compare un messaggio ( Raster objects have different extents. Result for their intersection is returned)
 # ci dice che l'estenzione delle due mappe non è la stessa, molto probabilmente ci sono alcuni pixel in piu in una rispetto all'altra
@@ -703,7 +705,7 @@ plotRGB(defor1, r=1, g=2, b=3, stretch="lin") # in questo modo plottiamo l'immag
 # con la funzione "ggRGB" raggruppa le varie bande in una sola e le discretizza su assi x e y
 ggRGB(defor1, r=1, g=2, b=3, stretch="lin")
 
-#fcciamo la stessa cosa con la seconda immagine
+#facciamo la stessa cosa con la seconda immagine
 defor2<-brick("defor2.jpg") 
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")
@@ -734,9 +736,9 @@ ggRGB(defor1, r=1, g=2, b=3, stretch="lin")
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")
 
 #con unsuperClass facciamo la classificazione non supervisionata da noi e fa tutto il sistema 
-d1c<- unsuperClass(defor1,nClasses=2) # è case sensitive prciò dobbiamo stare sepre attenti alle maiuscole
+d1c<- unsuperClass(defor1,nClasses=2) # è case sensitive prciò dobbiamo stare sempre attenti alle maiuscole
 d1c # vediamo gli attributi della classificazione appena fatta
-plot(d1c$map) # in questo modo plotto la mappa della classificazione e scegli il sistema a cosa assegnare le classi
+plot(d1c$map) # in questo modo plotto la mappa della classificazione e sceglie il sistema a cosa assegnare le classi
 #class1: forest
 #class2: agricolture
 
@@ -833,7 +835,7 @@ cl <- colorRampPalette(c('black','white','red','magenta','green'))(100)
 plot(ndvi,col=cl)
 # da questo singolo strato utilizziamo la moving window e calcoliamo la deviazione standard
 
-#utiliziamo la funzione "focal": nell'intorno dell amoving window calcoliamo la statistica che ci piace
+#utiliziamo la funzione "focal": nell'intorno della moving window calcoliamo la statistica che ci piace
 ndvi_devst<-focal(ndvi,w=matrix(1/9,nrow=3,ncol=3),fun=sd)
 #mettiamo prima l'oggetto su cui calcolare la dev. standard, si inserisce poi la finestra su cui fare il calcolo (solitamente è quadrata)
 #più grande è la finestra e più lungo è il calcolo, alla fine si mette la funzione da utilizzare ovvero "deviazione standard"
