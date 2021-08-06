@@ -566,11 +566,11 @@ library(raster)
 library(RStoolbox)
 library(ggplot2) # pacchetto necessario al fine di costruire grafici
 library(gridExtra)
-setwd("C:/lab")
+setwd("C:/lab") # settiamo la cartella di lavoro
 p224r63 <- brick("p224r63_2011_masked.grd") # richiamiamo l'immagine con la fuzione brick
-ggRGB(p224r63,3,2,1, stretch="lin") 
+ggRGB(p224r63,3,2,1, stretch="lin")  #Calcola il raster composito a colori RGB per la stampa con ggplot2
 ggRGB(p224r63,4,3,2, stretch="lin")
-p1 <- ggRGB(p224r63,3,2,1, stretch="lin")
+p1 <- ggRGB(p224r63,3,2,1, stretch="lin") # in questo modo associamo la funzione precedente ad una variabile
 p2 <- ggRGB(p224r63,4,3,2, stretch="lin")
 grid.arrange(p1, p2, nrow = 2) # in questo modo costruiamo dei grafici con la griglia
 
