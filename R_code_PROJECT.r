@@ -2,8 +2,6 @@
 
 #This is the project for the exam of remote sensing 2020-2021
 
-
-library(rasterdiv)
 library(RStoolbox)
 library(ggplot2)
 library(raster)
