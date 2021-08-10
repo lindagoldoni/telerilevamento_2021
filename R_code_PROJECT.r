@@ -5,6 +5,7 @@
 library(RStoolbox)
 library(ggplot2)
 library(raster)
+library(rgdal)
 
 
 
