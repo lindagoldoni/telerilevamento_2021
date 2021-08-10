@@ -2,13 +2,13 @@
 
 #This is the project for the exam of remote sensing 2020-2021
 
-library(rasterVis)
+
 library(rasterdiv)
 library(gridExtra)
 library(RStoolbox)
 library(ggplot2)
 library(raster)
-library(ncdf4)
+
 
 
 setwd("C:/lab/project/australia/all")
