@@ -4,7 +4,6 @@
 
 
 library(rasterdiv)
-library(gridExtra)
 library(RStoolbox)
 library(ggplot2)
 library(raster)
